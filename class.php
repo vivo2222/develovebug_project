@@ -53,7 +53,7 @@
                     </div>
                     <div class="field btn">
                     <div class="btn-layer"></div>
-                    <input type="submit" name="create-btn" value="Create">
+                    <input type="submit" name="create class-btn" value="Create">
                     </div>
                 </form>
                 </div>
@@ -72,19 +72,42 @@
                 <div class="modal-body">
                 <form action="" method="post" class="create">
                     <div class="field">
-                    <input type="text" name="subject" placeholder="Subject" value="<?php echo $activeClassInfo['subject']?>" required>
+                        <p><label for="subject">Subject</label></p>
+                        <p><input type="text" name="subject" placeholder="Subject" value="<?php echo $activeClassInfo['subject']?>" required></p>
                     </div>
                     <div class="field">
-                    <input type="text" name="semester" placeholder="Semester" value="<?php echo $activeClassInfo['semester']?>" required>
+                        <p><label for="semester">Semester</label></p>
+                        <p><input type="text" name="semester" placeholder="Semester" value="<?php echo $activeClassInfo['semester']?>" required></p>
                     </div>
                     <div class="field">
-                    <input type="text" name="room" placeholder="Room" value="<?php echo $activeClassInfo['room']?>" required>
+                        <p><label for="room">Room</label></p>
+                        <p><input type="text" name="room" placeholder="Room" value="<?php echo $activeClassInfo['room']?>" required></p>
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="confirm" name="edit-btn" class="btn btn-primary">Save change</button>
+                    <button type="confirm" name="edit class-btn" class="btn btn-primary">Save change</button>
                     </div>
                 </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>  
+    <div class="modal fade" id="staticBackdrop2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Class Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post">
+                        <p>Are you sure about that?</p>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="confirm" name="delete-btn" class="btn btn-primary" data-dismiss="model">Confirm</button>
+                    </form>
                 </div>
                 
             </div>
@@ -106,7 +129,7 @@
                             </svg>
                             <ul class="list-group">
                                 <li class="list-group-item" data-toggle="modal" data-target="#staticBackdrop">Edit class</li>
-                                <li class="list-group-item">Remove class</li>
+                                <li class="list-group-item" data-toggle="modal" data-target="#staticBackdrop2">Remove class</li>
                             </ul>
                         </span>
                         </h1>

@@ -138,6 +138,18 @@
         $isUpdated = $sql->execute();
         return $isUpdated;
     }
+    function deleteClass($conn, $classId){
+        $sql = $conn->prepare("DELETE FROM classes WHERE id = ?");
+        $sql->bind_param("i",$classId);
+        $isDelete = $sql->execute();
+        return $isDelete;
+    }
+    function deleteClassUserRole($conn, $classId){
+        $sql = $conn->prepare("DELETE FROM class_user_role WHERE class_id = ?");
+        $sql->bind_param("i", $classId);
+        $isDelete = $sql->execute();
+        return $isDelete;
+    }
     function sendMailVerify($email, $token){
         $subject = "Verification classroom account.";
         $to = $email;

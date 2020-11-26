@@ -46,7 +46,7 @@
                     </div>
                     <div class="field btn">
                     <div class="btn-layer"></div>
-                    <input type="submit" name="create-btn" value="Create">
+                    <input type="submit" name="create class-btn" value="Create">
                     </div>
                 </form>
                 </div>

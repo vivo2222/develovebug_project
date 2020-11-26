@@ -114,7 +114,7 @@
         }
         header("Location: class.php?classId=".$_SESSION['active_classId']);
     }
-    if(isset($_POST["create-btn"])){
+    if(isset($_POST["create class-btn"])){
         $subject = filter_var($_POST["subject"],FILTER_SANITIZE_STRING);
         $code = rand_code(6);
         $semester = filter_var($_POST["semester"], FILTER_SANITIZE_STRING);
@@ -136,10 +136,11 @@
             $class_id = $conn->insert_id;
             $userId = $_SESSION["userId"];
             addClassUserRole($conn, $class_id, $userId, 2);
-            addClassUserRole($conn, $class_id, $userId, 1);
+            addClassUserRole($conn, $class_id, $userId, 1);\
+            header("Location:home.php");
         }
     }
-    if(isset($_POST["edit-btn"])){
+    if(isset($_POST["edit class-btn"])){
         $subject = filter_var($_POST["subject"],FILTER_SANITIZE_STRING);
         $semester = filter_var($_POST["semester"], FILTER_SANITIZE_STRING);
         $room = filter_var($_POST["room"], FILTER_SANITIZE_STRING);
@@ -157,5 +158,11 @@
             editClass($conn, $class_id, $subject, $semester, $room);
             header("Location:class.php?classId=".$_SESSION["active_classId"]);
         }
+    }
+    if(isset($_POST["delete-btn"])){
+        $classId = $_SESSION["active_classId"];
+        deleteClassUserRole($conn, $classId);
+        deleteClass($conn, $classId);
+        header("Location:classes.php");
     }
 ?>

@@ -1680,10 +1680,8 @@ input[type="file"] {
     width: 100%;
   }
 }
-
 .modal-body input{
-  text-align: center;
-  width: 50%;
   height: 50px;
-  margin: 10px;
+  width: 95%;
+  font-size: 30px;
 }
