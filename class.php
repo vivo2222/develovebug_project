@@ -72,13 +72,13 @@
                 <div class="modal-body">
                 <form action="#" method="post" class="create">
                     <div class="field">
-                    <input type="text" name="subject" placeholder="Subject" required>
+                    <input type="text" name="subject" placeholder="Subject" value="<?php echo $activeClassInfo['subject']?>" required>
                     </div>
                     <div class="field">
-                    <input type="text" name="semester" placeholder="Semester" required>
+                    <input type="text" name="semester" placeholder="Semester" value="<?php echo $activeClassInfo['semester']?>" required>
                     </div>
                     <div class="field">
-                    <input type="text" name="room" placeholder="Room" required>
+                    <input type="text" name="room" placeholder="Room" value="<?php echo $activeClassInfo['room']?>" required>
                     </div>
                     <div class="field btn">
                     <div class="btn-layer"></div>

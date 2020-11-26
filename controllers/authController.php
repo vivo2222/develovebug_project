@@ -133,6 +133,10 @@
             while(!insertClass($conn, $subject, $code, $semester, $room, $create_date)){
                 $code= rand_code(6);
             }
+            $class_id = $conn->insert_id;
+            $userId = $_SESSION["userId"];
+            addClassUserRole($conn, $class_id, $userId, 2);
+            addClassUserRole($conn, $class_id, $userId, 1);
         }
     }
 ?>
