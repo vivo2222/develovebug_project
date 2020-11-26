@@ -114,4 +114,25 @@
         }
         header("Location: class.php?classId=".$_SESSION['active_classId']);
     }
+    if(isset($_POST["create-btn"])){
+        $subject = filter_var($_POST["subject"],FILTER_SANITIZE_STRING);
+        $code = rand_code(6);
+        $semester = filter_var($_POST["semester"], FILTER_SANITIZE_STRING);
+        $room = filter_var($_POST["room"], FILTER_SANITIZE_STRING);
+        $create_date = date("yy-m-d");
+        if(empty($subject)){
+            $errors = "Subject required";
+        }
+        else if(empty($semester)){
+            $errors = "Semester required";
+        }
+        else if (empty($room)){
+            $errors = "Room required";
+        }
+        else{
+            while(!insertClass($conn, $subject, $code, $semester, $room, $create_date)){
+                $code= rand_code(6);
+            }
+        }
+    }
 ?>

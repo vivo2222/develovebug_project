@@ -41,7 +41,7 @@
                     <input type="submit" name="join-btn" value="Join">
                     </div>
                 </form>
-                <form action="#" class="create">
+                <form action="#" method="post" class="create">
                     <div class="field">
                     <input type="text" name="subject" placeholder="Subject" required>
                     </div>
@@ -70,7 +70,21 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis obcaecati mollitia ex autem ab consequatur? Dicta maxime repudiandae, autem consequatur qui fugit tenetur adipisci illo nulla, beatae, ipsam necessitatibus ipsum.
+                <form action="#" method="post" class="create">
+                    <div class="field">
+                    <input type="text" name="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="field">
+                    <input type="text" name="semester" placeholder="Semester" required>
+                    </div>
+                    <div class="field">
+                    <input type="text" name="room" placeholder="Room" required>
+                    </div>
+                    <div class="field btn">
+                    <div class="btn-layer"></div>
+                    <input type="submit" name="create-btn" value="Create">
+                    </div>
+                </form>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
