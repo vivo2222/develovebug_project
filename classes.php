@@ -41,7 +41,7 @@
                     <input type="submit" name="join-btn" value="Join">
                     </div>
                 </form>
-                <form action="#" class="create">
+                <form action="#" method="post" class="create">
                     <div class="field">
                     <input type="text" name="subject" placeholder="Subject" required>
                     </div>

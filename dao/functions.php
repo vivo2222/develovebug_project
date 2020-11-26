@@ -111,7 +111,21 @@
         return $isInserted;
     }
     // function insertPost($conn, $){}
-    // function insertClass($conn,$){}
+    function insertClass($conn, $subject, $code, $semester, $room, $create_date){
+        $sql = $conn->prepare("INSERT INTO classes(subject, code, semester, room, created_date) VALUES (?, ?, ?, ?, ?)");
+        $sql->bind_param('sssss', $subject, $code, $semester, $room, $create_date);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    function rand_code( $length ) {  
+        $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";  
+        $size = strlen( $chars );
+        $str = "";  
+        for( $i = 0; $i < $length; $i++ ) {  
+        $str= $str . $chars[ rand( 0, $size - 1 ) ];  
+        }
+        return $str;
+    }
     function sendMailVerify($email, $token){
         $subject = "Verification classroom account.";
         $to = $email;
