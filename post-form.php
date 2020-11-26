@@ -36,11 +36,11 @@
                 <form action="#" class="join" method="POST">
                     <div class="field">
                     <p>Ask your teacher for class code</p>
-                    <input type="text" placeholder="Class Code" required>
+                    <input type="text" name="classCode" placeholder="Class Code" required>
                     </div>
                     <div class="field btn">
                     <div class="btn-layer"></div>
-                    <input type="submit" name="join-btn" value="Join">
+                    <input type="submit" name="join-class-btn" value="Join">
                     </div>
                 </form>
                 <form action="#" method="post" class="create">
@@ -55,7 +55,7 @@
                     </div>
                     <div class="field btn">
                     <div class="btn-layer"></div>
-                    <input type="submit" name="create class-btn" value="Create">
+                    <input type="submit" name="create-class-btn" value="Create">
                     </div>
                 </form>
                 </div>

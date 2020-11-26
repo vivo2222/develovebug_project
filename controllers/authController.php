@@ -114,7 +114,7 @@
         }
         header("Location: class.php?classId=".$_SESSION['active_classId']);
     }
-    if(isset($_POST["create class-btn"])){
+    if(isset($_POST["create-class-btn"])){
         $subject = filter_var($_POST["subject"],FILTER_SANITIZE_STRING);
         $code = rand_code(6);
         $semester = filter_var($_POST["semester"], FILTER_SANITIZE_STRING);
@@ -164,5 +164,11 @@
         deleteClassUserRole($conn, $classId);
         deleteClass($conn, $classId);
         header("Location:classes.php");
+    }
+    if(isset($_POST["join-class-btn"])){
+        $code = $_POST["classCode"];
+        $classId = getClassId($conn, $code);
+        $userId = $_SESSION["userId"];
+        $roleId = 
     }
 ?>

@@ -181,4 +181,17 @@
         $isRemoved = $sql->execute();
         return $isRemoved;
     }
+    function addStudent($conn, $classId, $userId, $userRole){
+        $sql = $conn->prepare("INSERT INTO class_user_role(class_id, user_id, role_id) VALUE(?, ?, ?)");
+        $sql->bind_param("iii",$classId, $userId, $userRole);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    function getClassId($conn, $code){
+        $sql = $conn->prepare("SELECT id FROM classes WHERE code = ?");
+        $sql->bind_param("i", $code);
+        $result = $sql->execute();
+        $class = $result->fetch_assoc();
+        return $class["id"];
+    }
 ?>
