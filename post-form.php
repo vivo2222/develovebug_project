@@ -133,6 +133,23 @@
                                                     </span>
                                                     <span class="infocenter-qform-desc">Please choose correct category for the assignment.</span>
                                                 </p>
+                                                <p>
+                                                    <label for="assignment-category" class="required">
+                                                        Limit visibility
+                                                        <span>*</span>
+                                                    </label>
+                                                    <span class="styled-select">
+                                                        <select name="visibility" id="assignment-visibility" class="postform">
+                                                            <option value="-1">Select a visibility</option>
+                                                            <option value="12" class="level-0">All people</option>
+                                                            <option value="11" class="level-0">HTML</option>
+                                                            <option value="19" class="level-0">PHP</option>
+                                                            <option value="10" class="level-0">REACTJS</option>
+                                                        </select>
+
+                                                    </span>
+                                                    <span class="infocenter-qform-desc">Please choose correct category for the assignment.</span>
+                                                </p>
                                                 <label>Attachment</label>
                                                 <div class="question-multiple-upload">
                                                     <div class="clearfix"></div>
@@ -207,53 +224,11 @@
                                                 </div>
                                                 <p>
                                                     <span class="infocenter-qform-desc">
-                                                        Type your question description here. <br>
+                                                        Type your assignment description here. <br>
                                                     </span>
                                                 </p>
                                             </div>
-                                            <div class="form-inputs clearfix">
-                                                <p class="question_poll_p">
-                                                    <label for="video_description-656">Video description</label>
-                                                    <input type="checkbox" id="video_description-656" class="video_description_input" name="video_description" value="1">
-                                                    <span class="question_poll">Do you want to add a video to the description?</span>
-                                                </p>
-
-                                                <div class="video_description" style="display: block;">
-                                                    <p>
-                                                        <label for="video_type-656">Video type</label>
-                                                        <span class="styled-select">
-                                                            <select id="video_type-656" name="video_type">
-                                                                <option value="youtube">Youtube</option>
-                                                                <option value="vimeo">Vimeo</option>
-                                                                <option value="daily">Dialymotion</option>
-                                                            </select>
-                                                        </span>
-                                                        <span class="infocenter-qform-desc">Choose video type .</span>
-                                                    </p>
-
-                                                    <p>
-                                                        <label for="video_id-656">Video ID</label>
-                                                        <input name="video_id" id="video_id-656" class="video_id" type="text" value="">
-                                                        <span class="infocenter-qform-desc">Put your video id here :http://www.youtube.com/watch?v=7TF00hJI78Y EX:'7TF00hJI78Y' .</span>
-                                                    </p>
-                                                </div>
-                                                <p class="question_poll_p">
-                                                    <label for="remember_answer-656">Notified</label>
-                                                    <input type="checkbox" id="remember_answer-656" name="remember_answer" value="1">
-                                                    <span class="question_poll">Notify by e-mail for incoming answers.</span>
-                                                </p>
-                                                <p class="question_poll_p">
-                                                    <label for="agree_terms-656" class="required">
-                                                        Terms
-                                                        <span>*</span>
-                                                    </label>
-                                                    <input type="checkbox" id="agree_terms-656" name="agree_terms" value="1">
-                                                    <span class="question_poll">
-                                                        By posting your question, you agree to the 
-                                                        <a target="_blank" href="https://fluentthemes.com/wp/knowledge/terms-of-services/">terms of service</a>.
-                                                    </span>
-                                                </p>
-                                            </div>
+                                            
                                             <p class="form-submit">
                                                 <input type="hidden" name="form_type" value="add_question">
                                                 <input type="hidden" name="post_type" value="add_question">

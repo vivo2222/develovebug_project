@@ -25,6 +25,5 @@ $('.class-alter-icon').on('click', function(){
     $('.class-alter-icon ul').toggle();
 });
 $('.post-alter-icon').on('click', function(){
-    alert("fghjkl");
     $('.post-alter-icon ul').toggle();
 })
