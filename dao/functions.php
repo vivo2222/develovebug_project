@@ -1,0 +1,146 @@
+<?php
+    function getUserRoleOfClass($conn,$classId, $userId){
+        $sql =  $conn->prepare("SELECT role_id FROM class_user_role WHERE user_id = ? AND class_id = ? ");
+        $sql->bind_param("ii", $userId, $classId);
+        $user_role = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+            if($result->num_rows > 0){
+                $user_role = $result->fetch_assoc();
+
+                $sql =  $conn->prepare("SELECT * FROM roles WHERE id = ?");
+                $sql->bind_param("i", $user_role["role_id"]);
+                if($sql->execute()){
+                    $result = $sql->get_result();
+                    $user_role = $result->fetch_assoc();
+                }
+            }
+        }
+        return $user_role;
+    }
+    function getUserInfoLogin($conn,$user_login_info){
+        $sql =  $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
+        $sql->bind_param("ss", $user_login_info, $user_login_info);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function setUserRoleOfClass($conn, $classId, $userId, $roleId){
+        $sql =  $conn->prepare("INSERT INTO class_user_role(class_id, user_id, role_id) VALUES(?,?,?)");
+        $sql->bind_param("iii", $classId, $userId, $roleId);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    function getPeopleOfClassByRole($conn, $classId, $roleId){
+        $sql =  $conn->prepare("SELECT * FROM class_user_role WHERE class_id = ? AND role_id = ? ");
+        $sql->bind_param("ii", $classId, $roleId);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getClassInfo($conn, $classId){
+        $sql =  $conn->prepare("SELECT * FROM classes WHERE id = ?");
+        $sql->bind_param("i", $classId);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getUserInfo($conn, $userId){
+        $sql =  $conn->prepare("SELECT * FROM users WHERE id = ?");
+        $sql->bind_param("i", $userId);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getTeacherInfo($conn, $classId){
+        $roleId = 2;
+        $sql =  $conn->prepare("SELECT * FROM class_user_role WHERE class_id = ? AND role_id = ?");
+        $sql->bind_param("ii", $classId, $roleId);
+        $teacher_info  = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+            if($result->num_rows > 0){
+                $teacher_info = $result->fetch_assoc();
+                $sql =  $conn->prepare("SELECT * FROM users WHERE id = ?");
+                $sql->bind_param("i", $teacher_info['user_id']);
+                if($sql->execute()){
+                    $result = $sql->get_result();
+                    $teacher_info = $result->fetch_assoc();
+                }
+            }
+        }
+        return $teacher_info;
+
+    }
+    function checkEmailExisted($conn, $email){
+        $sql =  $conn->prepare("SELECT * FROM users WHERE email = ?");
+        $sql->bind_param("s", $email);
+        if($sql->execute()){
+            $result = $sql->get_result();
+            if($result->num_rows > 0)
+                return TRUE;
+            return FALSE;
+        }
+        return FALSE;
+        
+    }
+    function checkUsernameExisted($conn, $username){
+        $sql =  $conn->prepare("SELECT * FROM users WHERE username = ?");
+        $sql->bind_param("s", $username);
+        if($sql->execute()){
+            $result = $sql->get_result();
+            if($result->num_rows > 0)
+                return TRUE;
+            return FALSE;
+        }
+        return FALSE;
+    }
+    function insertUser($conn,$username, $password, $fullname, $email, $birth, $phone, $token, $verified){
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $sql =  $conn->prepare("INSERT INTO users(username, password, fullname, email, birth, tel, token, verified) VALUES(?,?,?,?,?,?,?,?)");
+        $sql->bind_param("sssssssi", $username, $password, $fullname, $email, $birth, $phone, $token, $verified);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    // function insertPost($conn, $){}
+    // function insertClass($conn,$){}
+    function sendMailVerify($email, $token){
+        $subject = "Verification classroom account.";
+        $to = $email;
+        $msg = "<a href='http://localhost:8888/do_an_web/verify.php?token=$token' style='color: #00316b; font-weight: bold;'> Register now! </a>";
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From: TDTU CLASSROOM \r\n";
+        $is_sent = mail($to,$subject,$msg,$headers);
+        return $is_sent;
+    }
+    function setUserRole($conn, $classId, $userId, $roleId){
+        $sql =  $conn->prepare("INSERT INTO class_user_role(class_id, user_id, role_id) VALUES (?, ?, ?)");
+        $sql->bind_param("iii",$classId, $userId, $roleId);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    function getClassesList($conn, $userId){
+        $sql =  $conn->prepare("SELECT * FROM class_user_role WHERE user_id = ? ");
+        $sql->bind_param("i", $userId);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function removeUserRoleOfClass($conn, $classId, $userId){
+        $sql =  $conn->prepare("DELETE FROM class_user_role WHERE class_id = ? AND user_id = ?");
+        $sql->bind_param("ii",$classId, $userId);
+        $isRemoved = $sql->execute();
+        return $isRemoved;
+    }
+?>
