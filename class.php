@@ -113,6 +113,29 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="staticBackdrop1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Invite people</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <form method="POST" action="">
+                    <div class="modal-body">
+                        Code : <i><?php echo $activeClassInfo['code']; ?></i>
+                        <p>Or send mail to invite, type email below</p>
+                        <input type="text" class="invited-email" name="invited-email">
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" name="add-people-btn">Save change</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div id="wrap" class="wrap-nicescroll">
         <?php require "nav.php"?>
         <div class="breadcrumbs">
@@ -331,7 +354,7 @@
                                 <div class="people-info">
                                     <div class="teacher-info-list">
                                         <h3>Teacher</h3>
-                                        <div class="add-people-icon">
+                                        <div class="add-people-icon" data-toggle="modal" data-target="#staticBackdrop1">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
                                             </svg>
@@ -355,7 +378,7 @@
                                     </div>
                                     <div class="student-info-list">
                                         <h3>Student</h3>
-                                        <div class="add-people-icon">
+                                        <div class="add-people-icon"  data-toggle="modal" data-target="#staticBackdrop1">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
                                             </svg>

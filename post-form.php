@@ -62,6 +62,7 @@
             </div>
         </div>
     </div>
+    
     <div id="wrap" class="wrap-nicescroll">
         <?php require "nav.php"?>
         <div class="breadcrumbs">
@@ -156,51 +157,14 @@
                                                     <p class="form-submit add_poll">
                                                         <button type="button"
                                                             class="button color small submit add_poll_button add_upload_button_js">
-                                                            <svg width="1em" height="1em" viewBox="0 0 16 16"
-                                                                class="add-file bi bi-plus" fill="currentColor"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path fill-rule="evenodd"
-                                                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="add-file bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                                                             </svg>
                                                             Add Field
                                                         </button>
                                                     </p>
                                                     <ul class="question_poll_item question_upload_item ui-sortable">
-                                                        <li class="poll_li_1">
-                                                            <div class="poll-li">
-                                                                <div class="fileinputs">
-                                                                    <input type="file" class="file" name="attachment_m[1][file_url]" id="attachment_m[1][file_url]">
-                                                                    <div class="fakefile">
-                                                                        <button type="button"
-                                                                            class="button small margin_0">Select
-                                                                            file</button>
-                                                                        <span>
-                                                                            <svg width="1em" height="1em"
-                                                                                viewBox="0 0 16 16" class="bi bi-upload"
-                                                                                fill="currentColor"
-                                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fill-rule="evenodd"
-                                                                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                                                                <path fill-rule="evenodd"
-                                                                                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-                                                                            </svg>
-                                                                            Browse
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="del-poll-li">
-                                                                        <svg width="1em" height="1em"
-                                                                            viewBox="0 0 16 16"
-                                                                            class="bi bi-x-square-fill"
-                                                                            fill="currentColor"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path fill-rule="evenodd"
-                                                                                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                                                                        </svg>
-                                                                    </div>
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                        </li>
+                                                        
                                                     </ul>
                                                     <!-- <script> var next_attachment = 1;</script> -->
                                                     <div class="clearfix"></div>
