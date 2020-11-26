@@ -84,10 +84,7 @@
                         $_SESSION["token"] = $userinfo["token"];
                         $_SESSION["verified"] = $userinfo["verified"];
                         $_SESSION["login"] = "1";
-                        if($_SESSION["userId"] === 1)
-                            header("Location: admin.php");
-                        else
-                            header("Location: home.php");
+                        header("Location: home.php");
                     }else{
                         $errors = "This account have been not verified";
                     }
@@ -159,8 +156,8 @@
             }
             $class_id = $conn->insert_id;
             $userId = $_SESSION["userId"];
-            addClassUserRole($conn, $class_id, $userId, 2);
-            addClassUserRole($conn, $class_id, $userId, 1);
+            setUserRoleOfClass($conn, $class_id, $userId, 2);
+            setUserRoleOfClass($conn, $class_id, 1, 1);
             header("Location:classes.php");
         }
     }

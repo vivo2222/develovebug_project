@@ -205,7 +205,7 @@
                                     <span class="hidden-xs">People</span>
                                 </a>
                             </li>
-                            <?php if($_SESSION['active_roleId'] == 2){?>
+                            <?php if($_SESSION['active_roleId'] == 2 || $_SESSION['active_roleId'] == 1){?>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="deadline-tab" data-toggle="tab" href="#deadline" role="tab"
                                     aria-controls="contact" aria-selected="false">
@@ -384,7 +384,7 @@
                                             </svg>
                                         </div>
                                         <div class="clearfix"></div>
-                                            <?php if($_SESSION['active_roleId'] == 2){?>
+                                            <?php if($_SESSION['active_roleId'] == 2 || $_SESSION['active_roleId'] == 1){?>
                                             <form method="POST">
                                                 <button type="submit" class="btn btn-dark" name="remove-people-btn">Remove</button>
                                                 <ul class="list-group list-group-flush teacher_list">

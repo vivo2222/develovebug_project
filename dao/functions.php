@@ -131,12 +131,6 @@
         }
         return $str;
     }
-    function addClassUserRole($conn, $class_id, $user_id, $role_id){
-        $sql = $conn->prepare("INSERT INTO class_user_role(class_id, user_id, role_id) VALUES (?, ?, ?)");
-        $sql->bind_param("iii", $class_id, $user_id, $role_id);
-        $isInserted = $sql->execute();
-        return $isInserted;
-    }
     function editClass($conn, $classId, $subject, $semester, $room){
         $sql = $conn->prepare("UPDATE classes SET subject = ?,semester = ?,room = ? WHERE id = ?");
         $sql->bind_param('sssi', $subject, $semester, $room, $classId);
