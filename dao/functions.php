@@ -131,6 +131,30 @@
         }
         return $str;
     }
+    function addClassUserRole($conn, $class_id, $user_id, $role_id){
+        $sql = $conn->prepare("INSERT INTO class_user_role(class_id, user_id, role_id) VALUES (?, ?, ?)");
+        $sql->bind_param("iii", $class_id, $user_id, $role_id);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    function editClass($conn, $classId, $subject, $semester, $room){
+        $sql = $conn->prepare("UPDATE classes SET subject = ?,semester = ?,room = ? WHERE id = ?");
+        $sql->bind_param('sssi', $subject, $semester, $room, $classId);
+        $isUpdated = $sql->execute();
+        return $isUpdated;
+    }
+    function deleteClass($conn, $classId){
+        $sql = $conn->prepare("DELETE FROM classes WHERE id = ?");
+        $sql->bind_param("i",$classId);
+        $isDelete = $sql->execute();
+        return $isDelete;
+    }
+    function deleteClassUserRole($conn, $classId){
+        $sql = $conn->prepare("DELETE FROM class_user_role WHERE class_id = ?");
+        $sql->bind_param("i", $classId);
+        $isDelete = $sql->execute();
+        return $isDelete;
+    }
     function sendMailVerify($email, $token){
         $subject = "Verification classroom account.";
         $to = $email;
