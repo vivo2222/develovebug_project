@@ -120,22 +120,23 @@
         }
         header("Location: class.php?classId=".$_SESSION['active_classId']);
     }
-    if(isset($_POST['add-people-btn'])){
+    if(isset($_POST['add-student-btn'])){
         $invited_email = $_POST["invited-email"];
-        $userinfo = getUserInfoLogin($conn, $invited_email);
+        echo sendMailInvite($invited_email, $_SESSION['active_classId'], 'yes', 3, $_SESSION['email']);
+        // $userinfo = getUserInfoLogin($conn, $invited_email);
 
-        if($userinfo->num_rows > 0){
-            $userinfo = $userinfo->fetch_assoc();
-            if(getUserRoleOfClass($conn, $_SESSION['active_classId'], $userinfo['id']) == null){
-                if(sendMailInvite($invited_email, $_SESSION['active_classId'], 'yes', $_SESSION['email'])){
-                    echo 'Invited';
-                }else{
-                    echo 'Fail';
-                }
-            }else{
-                echo 'This user have already joined!';
-            }
-        }
+        // if($userinfo->num_rows > 0){
+        //     $userinfo = $userinfo->fetch_assoc();
+        //     if(getUserRoleOfClass($conn, $_SESSION['active_classId'], $userinfo['id']) == null){
+        //         if(sendMailInvite($invited_email, $_SESSION['active_classId'], 'yes', $_SESSION['email'])){
+        //             echo 'Invited';
+        //         }else{
+        //             echo 'Fail';
+        //         }
+        //     }else{
+        //         echo 'This user have already joined!';
+        //     }
+        // }
     }
     if(isset($_POST["create-class-btn"])){
         $subject = filter_var($_POST["subject"],FILTER_SANITIZE_STRING);

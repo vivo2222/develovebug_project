@@ -130,7 +130,7 @@
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="add-people-btn">Save change</button>
+                    <button type="submit" class="btn btn-primary" name="add-student-btn">Save change</button>
                     </div>
                 </form>
             </div>
