@@ -159,11 +159,11 @@
             $class_id = $conn->insert_id;
             $userId = $_SESSION["userId"];
             addClassUserRole($conn, $class_id, $userId, 2);
-            addClassUserRole($conn, $class_id, $userId, 1);\
-            header("Location:home.php");
+            addClassUserRole($conn, $class_id, $userId, 1);
+            header("Location:classes.php");
         }
     }
-    if(isset($_POST["edit class-btn"])){
+    if(isset($_POST["edit-class-btn"])){
         $subject = filter_var($_POST["subject"],FILTER_SANITIZE_STRING);
         $semester = filter_var($_POST["semester"], FILTER_SANITIZE_STRING);
         $room = filter_var($_POST["room"], FILTER_SANITIZE_STRING);
@@ -192,6 +192,5 @@
         $code = $_POST["classCode"];
         $classId = getClassId($conn, $code);
         $userId = $_SESSION["userId"];
-        $roleId = 
     }
 ?>
