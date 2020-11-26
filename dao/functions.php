@@ -132,6 +132,12 @@
         $isInserted = $sql->execute();
         return $isInserted;
     }
+    function editClass($conn, $classId, $subject, $semester, $room){
+        $sql = $conn->prepare("UPDATE classes SET subject = ?,semester = ?,room = ? WHERE id = ?");
+        $sql->bind_param('sssi', $subject, $semester, $room, $classId);
+        $isUpdated = $sql->execute();
+        return $isUpdated;
+    }
     function sendMailVerify($email, $token){
         $subject = "Verification classroom account.";
         $to = $email;

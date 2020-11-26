@@ -70,7 +70,7 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                <form action="#" method="post" class="create">
+                <form action="" method="post" class="create">
                     <div class="field">
                     <input type="text" name="subject" placeholder="Subject" value="<?php echo $activeClassInfo['subject']?>" required>
                     </div>
@@ -80,16 +80,13 @@
                     <div class="field">
                     <input type="text" name="room" placeholder="Room" value="<?php echo $activeClassInfo['room']?>" required>
                     </div>
-                    <div class="field btn">
-                    <div class="btn-layer"></div>
-                    <input type="submit" name="create-btn" value="Create">
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="confirm" name="edit-btn" class="btn btn-primary">Save change</button>
                     </div>
                 </form>
                 </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Save change</button>
-                </div>
+                
             </div>
         </div>
     </div>

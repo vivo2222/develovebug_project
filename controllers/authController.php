@@ -139,4 +139,23 @@
             addClassUserRole($conn, $class_id, $userId, 1);
         }
     }
+    if(isset($_POST["edit-btn"])){
+        $subject = filter_var($_POST["subject"],FILTER_SANITIZE_STRING);
+        $semester = filter_var($_POST["semester"], FILTER_SANITIZE_STRING);
+        $room = filter_var($_POST["room"], FILTER_SANITIZE_STRING);
+        $class_id = $_SESSION["active_classId"];
+        if(empty($subject)){
+            $errors = "Subject required";
+        }
+        else if(empty($semester)){
+            $errors = "Semester required";
+        }
+        else if (empty($room)){
+            $errors = "Room required";
+        }
+        else{
+            editClass($conn, $class_id, $subject, $semester, $room);
+            header("Location:class.php?classId=".$_SESSION["active_classId"]);
+        }
+    }
 ?>
