@@ -131,12 +131,6 @@
         }
         return $str;
     }
-    function addClassUserRole($conn, $class_id, $user_id, $role_id){
-        $sql = $conn->prepare("INSERT INTO class_user_role(class_id, user_id, role_id) VALUES (?, ?, ?)");
-        $sql->bind_param("iii", $class_id, $user_id, $role_id);
-        $isInserted = $sql->execute();
-        return $isInserted;
-    }
     function editClass($conn, $classId, $subject, $semester, $room){
         $sql = $conn->prepare("UPDATE classes SET subject = ?,semester = ?,room = ? WHERE id = ?");
         $sql->bind_param('sssi', $subject, $semester, $room, $classId);
@@ -165,11 +159,15 @@
         $is_sent = mail($to,$subject,$msg,$headers);
         return $is_sent;
     }
-    function sendMailInvite($email, $classId, $isInvited, $userMail){
+    function sendMailInvite($email, $classId, $isInvited, $roleId, $userMail){
         $subject = "Verification classroom account.";
         $to = $email;
         $msg = "<h3>You are invited to join a class by $userMail</h3>";
+<<<<<<< HEAD
         $msg .= "<a href='http://localhost/develovebug_project/class.php?classId=$classId&isInvited=$isInvited&email=$email' style='color: #00316b; font-weight: bold;'> Join now! </a>";
+=======
+        $msg .= "<a href='http://localhost:8888/develovebug_project/insert.php?classId=$classId&isInvited=$isInvited&email=$email&role=$roleId' style='color: #00316b; font-weight: bold;'> Join now! </a>";
+>>>>>>> 2d589cff606b2a3c711cd258119dc76eb5bf3a02
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= "From: TDTU CLASSROOM \r\n";

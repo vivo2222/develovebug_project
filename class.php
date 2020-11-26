@@ -31,7 +31,7 @@
                 <div class="slider-tab"></div>
                 </div>
                 <div class="form-inner">
-                <form action="#" class="join" method="POST">
+                <form action="" class="join" method="POST">
                     <div class="field">
                     <p>Ask your teacher for class code</p>
                     <input type="text" name="classCode" placeholder="Class Code" required>
@@ -41,7 +41,7 @@
                     <input type="submit" name="join-class-btn" value="Join">
                     </div>
                 </form>
-                <form action="#" method="post" class="create">
+                <form action="" method="post" class="create">
                     <div class="field">
                     <input type="text" name="subject" placeholder="Subject" required>
                     </div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="field btn">
                     <div class="btn-layer"></div>
-                    <input type="submit" name="create-class-btn" value="Create">
+                    <input type="submit" name="create-class-btn" value="create">
                     </div>
                 </form>
                 </div>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="confirm" name="edit-class-btn" class="btn btn-primary">Save change</button>
+                    <button type="submit" name="edit-class-btn" class="btn btn-primary">Save change</button>
                     </div>
                 </form>
                 </div>
@@ -130,7 +130,7 @@
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="add-people-btn">Save change</button>
+                    <button type="submit" class="btn btn-primary" name="add-student-btn">Save change</button>
                     </div>
                 </form>
             </div>
@@ -205,7 +205,7 @@
                                     <span class="hidden-xs">People</span>
                                 </a>
                             </li>
-                            <?php if($_SESSION['active_roleId'] == 2){?>
+                            <?php if($_SESSION['active_roleId'] == 2 || $_SESSION['active_roleId'] == 1){?>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="deadline-tab" data-toggle="tab" href="#deadline" role="tab"
                                     aria-controls="contact" aria-selected="false">
@@ -384,7 +384,7 @@
                                             </svg>
                                         </div>
                                         <div class="clearfix"></div>
-                                            <?php if($_SESSION['active_roleId'] == 2){?>
+                                            <?php if($_SESSION['active_roleId'] == 2 || $_SESSION['active_roleId'] == 1){?>
                                             <form method="POST">
                                                 <button type="submit" class="btn btn-dark" name="remove-people-btn">Remove</button>
                                                 <ul class="list-group list-group-flush teacher_list">
