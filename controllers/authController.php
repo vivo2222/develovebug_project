@@ -103,6 +103,12 @@
     /** =====================================CLICK POST FORM BUTTON ACTION=========================================== */
 
     if (isset($_POST["post-form-btn"])){
+        $target_dir = "uploads/";
+        $target_file = $target_dir . $_FILES["fileToUpload"]["name"];
+
+        if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            die("Sorry, there was an error uploading your file.");
+        }
 
     }
 
@@ -113,6 +119,23 @@
             }
         }
         header("Location: class.php?classId=".$_SESSION['active_classId']);
+    }
+    if(isset($_POST['add-people-btn'])){
+        $invited_email = $_POST["invited-email"];
+        $userinfo = getUserInfoLogin($conn, $invited_email);
+
+        if($userinfo->num_rows > 0){
+            $userinfo = $userinfo->fetch_assoc();
+            if(getUserRoleOfClass($conn, $_SESSION['active_classId'], $userinfo['id']) == null){
+                if(sendMailInvite($invited_email, $_SESSION['active_classId'], 'yes', $_SESSION['email'])){
+                    echo 'Invited';
+                }else{
+                    echo 'Fail';
+                }
+            }else{
+                echo 'This user have already joined!';
+            }
+        }
     }
     if(isset($_POST["create-btn"])){
         $subject = filter_var($_POST["subject"],FILTER_SANITIZE_STRING);

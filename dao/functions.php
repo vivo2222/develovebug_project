@@ -110,7 +110,12 @@
         $isInserted = $sql->execute();
         return $isInserted;
     }
-    // function insertPost($conn, $){}
+    function insertPost($conn, $userId, $title, $details, $type, $topic, $limitScore, $dateCreated, $limitTime, $numComments, $numViews){
+        $sql =  $conn->prepare("INSERT INTO posts(user_id, title, details, type, topic, limit_score, date_created, limit_time, num_comments, num_views) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $sql->bind_param("issisissii", $userId, $title, $details, $type, $topic, $limitScore, $dateCreated, $limitTime, $numComments, $numViews);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
     function insertClass($conn, $subject, $code, $semester, $room, $create_date){
         $sql = $conn->prepare("INSERT INTO classes(subject, code, semester, room, created_date) VALUES (?, ?, ?, ?, ?)");
         $sql->bind_param('sssss', $subject, $code, $semester, $room, $create_date);
@@ -129,7 +134,18 @@
     function sendMailVerify($email, $token){
         $subject = "Verification classroom account.";
         $to = $email;
-        $msg = "<a href='http://localhost:8888/do_an_web/verify.php?token=$token' style='color: #00316b; font-weight: bold;'> Register now! </a>";
+        $msg = "<a href='http://localhost:8888/develovebug_project/verify.php?token=$token' style='color: #00316b; font-weight: bold;'> Register now! </a>";
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From: TDTU CLASSROOM \r\n";
+        $is_sent = mail($to,$subject,$msg,$headers);
+        return $is_sent;
+    }
+    function sendMailInvite($email, $classId, $isInvited, $userMail){
+        $subject = "Verification classroom account.";
+        $to = $email;
+        $msg = "<h3>You are invited to join a class by $userMail</h3>";
+        $msg .= "<a href='http://localhost:8888/develovebug_project/class.php?classId=$classId&isInvited=$isInvited&email=$email' style='color: #00316b; font-weight: bold;'> Join now! </a>";
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= "From: TDTU CLASSROOM \r\n";

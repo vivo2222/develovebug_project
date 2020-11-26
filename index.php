@@ -19,7 +19,7 @@
             <div class="form-div col-md-4 offset-md-4">
                 <form action="" method="post" id="signup-form">
                     <div class="form-title"><h3 class="text-center">Register</h3></div>
-                    <?php if ($errors != "") {?>
+                    <?php if (!empty($errors)) {?>
                         <div class="alert alert-danger" role="alert">
                             <?php echo $errors ?>
                         </div>
