@@ -192,6 +192,5 @@
         $code = $_POST["classCode"];
         $classId = getClassId($conn, $code);
         $userId = $_SESSION["userId"];
-        // $roleId =
     }
 ?>
