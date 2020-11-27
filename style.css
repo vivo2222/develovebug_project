@@ -527,8 +527,9 @@ textarea {
   text-align: center;
 }
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 .overal-post-info-box span small {
   padding-right: 20px;
@@ -1093,15 +1094,13 @@ p.infocenter_captcha_p {
 }
 .form-posts .form-style label {
   width: 100%;
-  margin-right: 1%;
-  margin-bottom: 9px;
+  margin: 0!important;
 }
 .form-style label {
   color: #2f3239;
   display: block;
   font-size: 13px;
   font-weight: bold;
-  margin-top: 9px;
 }
 .form-style label.required span {
   margin-left: 3px;
@@ -1110,7 +1109,6 @@ p.infocenter_captcha_p {
 .form-style p span {
   font-size: 12px;
   font-weight: normal;
-  margin-top: 5px;
   color: #848991;
 }
 .page-template-template-ask_question input[type="text"],
@@ -1429,9 +1427,6 @@ input[type="file"] {
 .question-submit .form-inputs p.question_poll_p label, .question-submit .form-inputs p.question_poll_p span {
   margin-top: 4px;
 }
-.form-style input[type="checkbox"] {
-  margin: 4px 10px 0 1px;
-}
 .question-submit input[type="checkbox"] {
   height: 16px;
   width: 16px !important;
@@ -1441,14 +1436,13 @@ input[type="file"] {
   outline: 0 !important;
   -webkit-border-radius: 2px;
 }
-.form-style input[type="checkbox"] {
-  margin: 2px 10px 0 1px;
+.form-style input[type="checkbox"]{
   outline: 0 !important;
 }
 .form-style input[type="checkbox"], .form-style input[type="radio"] {
   width: auto;
   float: left;
-  margin: 5px 10px 0 1px;
+  margin: 10px;
 }
 .question_poll {
   margin: 0 10px 0 0 !important;
@@ -1458,7 +1452,12 @@ input[type="file"] {
   float: left;
   
 }
-
+.styled-check{
+  padding: 15px 12px;
+  font-size: 13px!important;
+  font-weight: 600!important;
+  color: #2f3239!important;
+}
 .infocenter-qform-desc, .question_poll_item {
   margin-left: 0;
 }
@@ -1483,6 +1482,25 @@ input[type="file"] {
   font-weight: 100;
   color: #FFF;
   width: 40%;
+}
+.to-check{
+  float: left;
+  margin: 10px;
+  outline: 0 !important;
+  height: 16px;
+  width: 16px !important;
+  border: 1px solid #dedede;
+  background-color: #f3f3f3;
+  outline: 0 !important;
+  -webkit-border-radius: 2px;
+}
+.assignment-visibility label{
+  width: 100%;
+  margin: 0!important;
+  color: #2f3239;
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
 }
 .class-tabs a:hover{
   color: #999!important;
@@ -1601,6 +1619,9 @@ input[type="file"] {
 .topic-label:focus{
   box-shadow: none!important;
 }
+.card-header.post-box-header{
+  margin: 0!important;
+}
 .card-header.post-box-header .post-alter-icon{
   position: relative;
   /* float: right; */
@@ -1619,6 +1640,14 @@ input[type="file"] {
 }
 .post-link:hover a{
   color: #be161e!important;
+}
+.modal-body input{
+  padding: 10px 8px;
+  width: 90%;
+  font-size: 15px;
+  border: 1px solid #dedede ;
+  outline: none;
+  border-radius: 3px;
 }
 @media (max-width: 768px) {
   .hidden-xs {
@@ -1695,9 +1724,8 @@ input[type="file"] {
   .form-style .form-submit input.submit{
     width: 100%;
   }
-}
-.modal-body input{
-  height: 50px;
-  width: 95%;
-  font-size: 30px;
+  .card-header.post-box-header .post-alter-icon ul {
+    left: -300%;
+    top: 25px;
+  }
 }

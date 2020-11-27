@@ -62,7 +62,48 @@
             </div>
         </div>
     </div>
-    
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Select students</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group assignment-visibility student-list">
+                    <li class="list-group-item disabled" aria-disabled="true">
+                        <input class="to-check" name="check_list[]" type="checkbox" id="all_check">
+                        <label for="all_check">
+                            <img class="avatar" src="img/avatar.png" alt="avatar">
+                            All students
+                        </label>
+                    </li>
+                        <?php 
+                        if($student_list->num_rows > 0){
+                            while($list = $student_list->fetch_assoc()){ 
+                                if(getUserInfo($conn, $list["user_id"])->num_rows > 0){
+                                    $studentInfoArray = getUserInfo($conn, $list["user_id"])->fetch_assoc();
+                                
+                        ?>
+                        <li class="list-group-item">
+                            <input class="to-check" name="check_list[]" type="checkbox" id=<?php echo $studentInfoArray['id']?> value=<?php echo $studentInfoArray['id']?>>
+                            <label for=<?php echo $studentInfoArray['id']?>>
+                                <img class="avatar" src="img/avatar.png" alt="avatar">
+                                <?php echo $studentInfoArray['fullname']?>
+                            </label>
+                        </li>
+                        <?php }}} ?>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Accept</button>
+            </div>
+            </div>
+        </div>
+    </div>
     <div id="wrap" class="wrap-nicescroll">
         <?php require "nav.php"?>
         <div class="breadcrumbs">
@@ -135,22 +176,16 @@
                                                     <span class="infocenter-qform-desc">Please choose correct category for the assignment.</span>
                                                 </p>
                                                 <p>
-                                                    <label for="assignment-category" class="required">
+                                                    <label class="required">
                                                         Limit visibility
                                                         <span>*</span>
                                                     </label>
-                                                    <span class="styled-select">
-                                                        <select name="visibility" id="assignment-visibility" class="postform">
-                                                            <option value="-1">Select a visibility</option>
-                                                            <option value="12" class="level-0">All people</option>
-                                                            <option value="11" class="level-0">HTML</option>
-                                                            <option value="19" class="level-0">PHP</option>
-                                                            <option value="10" class="level-0">REACTJS</option>
-                                                        </select>
-
+                                                    <span class="styled-check styled-select" data-toggle="modal" data-target="#staticBackdrop">
+                                                        Select students
                                                     </span>
-                                                    <span class="infocenter-qform-desc">Please choose correct category for the assignment.</span>
+                                                    <span class="infocenter-qform-desc">Select students who will be informed about this post.</span>
                                                 </p>
+                                                
                                                 <label>Attachment</label>
                                                 <div class="question-multiple-upload">
                                                     <div class="clearfix"></div>
