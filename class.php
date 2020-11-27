@@ -72,16 +72,16 @@
                 <div class="modal-body">
                 <form action="" method="post" class="create">
                     <div class="field">
-                        <p><label for="subject">Subject</label></p>
-                        <p><input type="text" name="subject" placeholder="Subject" value="<?php echo $activeClassInfo['subject']?>" ></p>
+                        <label for="subject">Subject</label>
+                        <input type="text" name="subject" placeholder="Subject" value="<?php echo $activeClassInfo['subject']?>" >
                     </div>
                     <div class="field">
-                        <p><label for="semester">Semester</label></p>
-                        <p><input type="text" name="semester" placeholder="Semester" value="<?php echo $activeClassInfo['semester']?>" ></p>
+                        <label for="semester">Semester</label>
+                        <input type="text" name="semester" placeholder="Semester" value="<?php echo $activeClassInfo['semester']?>" >
                     </div>
                     <div class="field">
-                        <p><label for="room">Room</label></p>
-                        <p><input type="text" name="room" placeholder="Room" value="<?php echo $activeClassInfo['room']?>" ></p>
+                        <label for="room">Room</label>
+                        <input type="text" name="room" placeholder="Room" value="<?php echo $activeClassInfo['room']?>" >
                     </div>
                     <div class="field">
                         <p><label for="room">Code</label></p>
@@ -464,7 +464,7 @@
                                                         
                                                 ?>
                                                     <li class="list-group-item">
-                                                        <input name="check_list[]" type="checkbox" id=<?php echo $studentInfoArray['id']?> value=<?php echo $studentInfoArray['id']?>>
+                                                        <input class="to-check" name="check_list[]" type="checkbox" id=<?php echo $studentInfoArray['id']?> value=<?php echo $studentInfoArray['id']?>>
                                                         <label for=<?php echo $studentInfoArray['id']?>>
                                                             <img class="avatar" src="img/avatar.png" alt="avatar">
                                                             <?php echo $studentInfoArray['fullname']?>
