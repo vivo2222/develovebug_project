@@ -165,11 +165,7 @@
         $subject = "Verification classroom account.";
         $to = $email;
         $msg = "<h3>You are invited to join a class by $userMail</h3>";
-<<<<<<< HEAD
         $msg .= "<a href='http://localhost/develovebug_project/class.php?classId=$classId&isInvited=$isInvited&email=$email' style='color: #00316b; font-weight: bold;'> Join now! </a>";
-=======
-        $msg .= "<a href='http://localhost:8888/develovebug_project/insert.php?classId=$classId&isInvited=$isInvited&email=$email&role=$roleId' style='color: #00316b; font-weight: bold;'> Join now! </a>";
->>>>>>> 2d589cff606b2a3c711cd258119dc76eb5bf3a02
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= "From: TDTU CLASSROOM \r\n";
@@ -207,9 +203,21 @@
         return $class["id"];
     }
     function updateUserInfo($conn, $username, $password, $email, $fullname, $birth, $tel, $token, $verified, $avatar){
-        sql = $conn->prepare("UPDATE classes SET username = ?,password = ?,email = ?, fullname = ?, birth = ?, tel = ?, token = ?, $verified = ?, $avatar = ? WHERE id = ?");
+        $sql = $conn->prepare("UPDATE classes SET username = ?,password = ?,email = ?, fullname = ?, birth = ?, tel = ?, token = ?, $verified = ?, $avatar = ? WHERE id = ?");
         $sql->bind_param('sssssssis', $username, $password, $email, $fullname, $birth, $tel, $token, $verified, $avatar);
         $isUpdated = $sql->execute();
         return $isUpdated;
+    }
+    function updatePost($conn, $user_id, $title, $details, $type, $topic, $limit_score, $limit_time){
+        $sql = $conn->prepare("UPDATE posts SET title = ?, details = ?, type = ?, topic = ?, limit_score = ?, limit_time = ? WHERE user_id = ?");
+        $sql->bind_param("ssiiiss", $title, $details, $type, $topic, $limit_score, $limit_time, $user_id);
+        $isUpdated = $sql->execute();
+        return $isUpdated;
+    }
+    function deletePost($conn, $id){
+        $sql = $conn->prepare("DELETE FROM posts WHERE id = ?");
+        $sql->bind_param("?", $id);
+        $isDeleted = $sql->execute();
+        return $isDeleted;    
     }
 ?>
