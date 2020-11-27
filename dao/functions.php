@@ -18,6 +18,13 @@
         }
         return $user_role;
     }
+
+    function setUserRole($conn, $classId, $userId, $roleId){
+        $sql =  $conn->prepare("INSERT INTO class_user_role(class_id, user_id, role_id) VALUES (?, ?, ?)");
+        $sql->bind_param("iii",$classId, $userId, $roleId);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
     function getUserInfoLogin($conn,$user_login_info){
         $sql =  $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
         $sql->bind_param("ss", $user_login_info, $user_login_info);
@@ -27,12 +34,7 @@
         }
         return $result;
     }
-    function setUserRoleOfClass($conn, $classId, $userId, $roleId){
-        $sql =  $conn->prepare("INSERT INTO class_user_role(class_id, user_id, role_id) VALUES(?,?,?)");
-        $sql->bind_param("iii", $classId, $userId, $roleId);
-        $isInserted = $sql->execute();
-        return $isInserted;
-    }
+    
     function getPeopleOfClassByRole($conn, $classId, $roleId){
         $sql =  $conn->prepare("SELECT * FROM class_user_role WHERE class_id = ? AND role_id = ? ");
         $sql->bind_param("ii", $classId, $roleId);
@@ -170,12 +172,7 @@
         $is_sent = mail($to,$subject,$msg,$headers);
         return $is_sent;
     }
-    function setUserRole($conn, $classId, $userId, $roleId){
-        $sql =  $conn->prepare("INSERT INTO class_user_role(class_id, user_id, role_id) VALUES (?, ?, ?)");
-        $sql->bind_param("iii",$classId, $userId, $roleId);
-        $isInserted = $sql->execute();
-        return $isInserted;
-    }
+    
     function getClassesList($conn, $userId){
         $sql =  $conn->prepare("SELECT * FROM class_user_role WHERE user_id = ? ");
         $sql->bind_param("i", $userId);

@@ -156,8 +156,8 @@
             }
             $class_id = $conn->insert_id;
             $userId = $_SESSION["userId"];
-            setUserRoleOfClass($conn, $class_id, $userId, 2);
-            setUserRoleOfClass($conn, $class_id, 1, 1);
+            setUserRole($conn, $class_id, $userId, 2);
+            setUserRole($conn, $class_id, 1, 1);
             header("Location:classes.php");
         }
     }
@@ -167,13 +167,13 @@
         $room = filter_var($_POST["room"], FILTER_SANITIZE_STRING);
         $class_id = $_SESSION["active_classId"];
         if(empty($subject)){
-            $errors = "Subject required";
+            $subject = $activeClassInfo['subject'];
         }
         else if(empty($semester)){
-            $errors = "Semester required";
+            $semester = $activeClassInfo['semester'];
         }
         else if (empty($room)){
-            $errors = "Room required";
+            $room = $activeClassInfo['room'];
         }
         else{
             editClass($conn, $class_id, $subject, $semester, $room);

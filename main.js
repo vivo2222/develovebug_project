@@ -34,6 +34,10 @@ $('.add_upload_button_js').on('click',function(){
 $('.question_poll_item').on('click', '.del-poll-li', (e) => {
     $(e.target).parents('li').remove();
 });
-// $('.add-people-icon').on('click',function(){
-
-// });
+$('textarea').keypress(function(e){
+    var char = e.keyCode ||e.which ;
+    if(char == 13){
+        $(this).attr('rows', $(this).rows + 1);
+        console.log($(this).rows);
+    }
+})

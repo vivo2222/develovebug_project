@@ -73,15 +73,19 @@
                 <form action="" method="post" class="create">
                     <div class="field">
                         <p><label for="subject">Subject</label></p>
-                        <p><input type="text" name="subject" placeholder="Subject" value="<?php echo $activeClassInfo['subject']?>" required></p>
+                        <p><input type="text" name="subject" placeholder="Subject" value="<?php echo $activeClassInfo['subject']?>" ></p>
                     </div>
                     <div class="field">
                         <p><label for="semester">Semester</label></p>
-                        <p><input type="text" name="semester" placeholder="Semester" value="<?php echo $activeClassInfo['semester']?>" required></p>
+                        <p><input type="text" name="semester" placeholder="Semester" value="<?php echo $activeClassInfo['semester']?>" ></p>
                     </div>
                     <div class="field">
                         <p><label for="room">Room</label></p>
-                        <p><input type="text" name="room" placeholder="Room" value="<?php echo $activeClassInfo['room']?>" required></p>
+                        <p><input type="text" name="room" placeholder="Room" value="<?php echo $activeClassInfo['room']?>" ></p>
+                    </div>
+                    <div class="field">
+                        <p><label for="room">Code</label></p>
+                        <p><input type="text" name="room" placeholder="Room" readonly=readonly value="<?php echo $activeClassInfo['code']?>"></p>
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -146,6 +150,7 @@
                         <?php
                             echo $activeClassInfo['subject'];
                         ?>
+                        <?php if($_SESSION['active_roleId'] == 2 || $_SESSION['active_roleId'] == 1){?>
                         <span class="class-alter-icon">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-three-dots-vertical" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
@@ -155,6 +160,7 @@
                                 <li class="list-group-item" data-toggle="modal" data-target="#staticBackdrop2">Remove class</li>
                             </ul>
                         </span>
+                        <?php }?>
                         </h1>
                         <div class="crumbs col-md-6">
                             <a href="home.php">Home</a>
@@ -219,7 +225,7 @@
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active class-tab" id="class" role="tabpanel" aria-labelledby="class-tab">
-                                <div class="stream-list">
+                                <!-- <div class="stream-list">
                                     <div class="stream-box">
                                         <div class="post-box">
                                             <div class="card post-box-card">
@@ -242,6 +248,36 @@
                                                             <li class="list-group-item" data-toggle="modal" data-target="#staticBackdrop1">Edit post</li>
                                                             <li class="list-group-item">Remove post</li>
                                                         </ul>
+                                                    </div>
+                                                    <div class="overal-post-info-box">
+                                                        <span class="clock">
+                                                            <small>
+                                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock-history" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+                                                                    <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+                                                                    <path fill-rule="evenodd" d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+                                                                </svg>
+                                                            4 YEARS
+                                                            </small>
+                                                        </span>
+                                                        <span class="view">
+                                                            <small>
+                                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
+                                                                    <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                                                                </svg>
+                                                                12 VIEWS
+                                                            </small>
+                                                        </span>
+                                                        <span class="reply">
+                                                            <small>
+                                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chat-square-text" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                                                    <path fill-rule="evenodd" d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                                                                </svg>
+                                                                12 REPLIES
+                                                            </small>
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
@@ -279,7 +315,35 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div>   
+                                </div>    -->
+                                <div class="accordion classworks-list" id="accordionExample">
+                                    <div class="card">
+                                        <div class="card-header" id="headingFour">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link btn-block text-left topic-label" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                                    Vo Tuong Vi da dang mot bai tap
+                                                </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <div class="shorten-post-content">
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, assumenda quia at, beatae eos odio deserunt fuga modi exercitationem officiis numquam enim facere obcaecati veniam odit inventore accusantium ducimus ex.
+                                                </div>
+                                                <footer class="blockquote-footer">
+                                                    <small class="text-muted">
+                                                        <cite title="Source Title">20/02/2019</cite>
+                                                        <i class="num_of_answers">3 answers</i>
+                                                    </small>
+                                                    <div class="post-link">
+                                                        <a href="post-detail.php?classId=<?php echo $activeClassInfo['id'];?>">Learn more</a>
+                                                    </div>
+                                                </footer>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
                                 <div class="row">
@@ -308,7 +372,7 @@
                                                 </h2>
                                                 </div>
 
-                                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                                 <div class="card-body">
                                                     <ul>
                                                         <li>hfdbj,nk</li>
@@ -354,11 +418,13 @@
                                 <div class="people-info">
                                     <div class="teacher-info-list">
                                         <h3>Teacher</h3>
+                                        <?php if($_SESSION['active_roleId'] == 2 || $_SESSION['active_roleId'] == 1){?>
                                         <div class="add-people-icon" data-toggle="modal" data-target="#staticBackdrop1">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
                                             </svg>
                                         </div>
+                                        <?php } ?>
                                         <div class="clearfix"></div>
                                         <ul class="list-group list-group-flush teacher_list">
                                         <?php 
@@ -378,11 +444,13 @@
                                     </div>
                                     <div class="student-info-list">
                                         <h3>Student</h3>
+                                        <?php if($_SESSION['active_roleId'] == 2 || $_SESSION['active_roleId'] == 1){?>
                                         <div class="add-people-icon"  data-toggle="modal" data-target="#staticBackdrop1">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
                                             </svg>
                                         </div>
+                                        <?php } ?>
                                         <div class="clearfix"></div>
                                             <?php if($_SESSION['active_roleId'] == 2 || $_SESSION['active_roleId'] == 1){?>
                                             <form method="POST">
@@ -427,8 +495,7 @@
                                 </div>
                                     
                             </div>
-                            <div class="tab-pane fade" id="deadline" role="tabpanel" aria-labelledby="deadline-tab">
-                                        
+                            <div class="tab-pane fade" id="deadline" role="tabpanel" aria-labelledby="deadline-tab">           
                             </div>
 
                         </div> 
