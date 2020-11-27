@@ -188,7 +188,8 @@
     }
     if(isset($_POST["join-class-btn"])){
         $code = $_POST["classCode"];
-        $classId = getClassId($conn, $code);
-        $userId = $_SESSION["userId"];
+        $classId = getClassIdByCode($conn, $code);
+        $user_id = $_SESSION["userId"];
+        insertStudent($conn, $class_id, $user_id, 3);
     }
 ?>
