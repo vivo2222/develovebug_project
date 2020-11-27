@@ -1242,6 +1242,9 @@ input.the-title, .the-username, .the-email, .video_id, .the-textarea, .taglist .
   top: -30px;
   right: 0;
 }
+.show-files-detail{
+  display: none;
+}
 .form-style-3 .form-inputs p.add_poll {
   float: right;
   width: auto !important;
@@ -1278,8 +1281,9 @@ input.the-title, .the-username, .the-email, .video_id, .the-textarea, .taglist .
 .question_poll_item {
   width: 100%;
 }
-.poll-li-1{
-  display: list-item;
+
+li.poll_li_1 {
+  display: none;
 }
 .poll-li {
   overflow: hidden;
