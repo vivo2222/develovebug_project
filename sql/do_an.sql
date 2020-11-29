@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 26, 2020 lúc 01:45 PM
+-- Thời gian đã tạo: Th10 29, 2020 lúc 03:15 AM
 -- Phiên bản máy phục vụ: 10.4.13-MariaDB
 -- Phiên bản PHP: 7.4.7
 
@@ -45,7 +45,7 @@ CREATE TABLE `classes` (
   `code` varchar(255) NOT NULL,
   `semester` varchar(255) NOT NULL,
   `room` varchar(255) DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
+  `avatar` varchar(255) NOT NULL DEFAULT 'img/class1.png',
   `created_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -54,12 +54,18 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`id`, `subject`, `code`, `semester`, `room`, `avatar`, `created_date`) VALUES
-(1, 'WEB APPLICATION', '12345', '2020-2021', 'F502', 'img/class1.png', '2020-11-19'),
-(2, 'DATA DTRUCTURE', '12DGHRGEFW', '2019-2020', 'A403', 'img/class1.png', '2020-11-03'),
-(4, 'Mang may tinh', 'dfzdfghj', '2020-2021', 'A705', 'img/class1.png', '2020-11-19'),
+(1, 'WEB APPLICATION', '12345', '2020-2021', NULL, 'img/class1.png', '2020-11-19'),
+(2, 'DATA DTRUCTURE', '12DGHRGEFW', '2019-2020', '12DGHRGEFW', 'img/class1.png', '2020-11-03'),
+(4, 'Nhap mon man may tinh', 'dfzdfghj', '2020-2021', 'A705', 'img/class1.png', '2020-11-19'),
 (5, 'ENGLISH 3', 'DDSDFGKMM', '2020-2021', 'A123', 'img/class1.png', '2020-11-19'),
 (6, 'NHẬP MÔN HỆ ĐIỀU HÀNH', 'SDFGHJKL', '2019-2021', 'C406', 'img/class1.png', '2020-11-20'),
-(8, 'Triết học Mac-Lenin', 'sdfghsdhtfyjjkl', '2020-2021', 'C503', 'img/class1.png', '2020-11-04');
+(8, 'Triết học Mac-Lenin', 'sdfghsdhtfyjjkl', '2020-2021', 'C503', 'img/class1.png', '2020-11-04'),
+(9, 'Ve chan dung', 'YNBN3h', '2019-2020', 'C120', 'img/class1.png', '2020-11-26'),
+(10, 'Ve mat', 'nDKdXq', '2019-2020', '123', '', '2020-11-26'),
+(11, 'mac cuoi', 'UzJmje', '2019-2020', 'C120', '', '2020-11-26'),
+(12, 'buon ngu', 'xHLFh8', '2019-2020', 'A123', '', '2020-11-26'),
+(13, 'BASIC OF MATH', 'b4e0982f1c37', '2019', 'C007', 'img/class1.png', '2020-11-28'),
+(14, 'English 2', 'f0f8bb', '2019-2020', 'C120', 'img/class1.png', '2020-11-28');
 
 -- --------------------------------------------------------
 
@@ -84,6 +90,12 @@ INSERT INTO `class_user_role` (`class_id`, `user_id`, `role_id`) VALUES
 (5, 1, 1),
 (6, 1, 1),
 (8, 1, 1),
+(9, 1, 1),
+(10, 1, 1),
+(11, 1, 1),
+(12, 1, 1),
+(13, 1, 1),
+(14, 1, 1),
 (1, 41, 2),
 (2, 41, 2),
 (4, 34, 2),
@@ -92,11 +104,23 @@ INSERT INTO `class_user_role` (`class_id`, `user_id`, `role_id`) VALUES
 (6, 45, 2),
 (8, 39, 2),
 (8, 43, 2),
+(9, 41, 2),
+(10, 51, 2),
+(11, 41, 2),
+(12, 41, 2),
+(13, 41, 2),
+(14, 41, 2),
+(2, 34, 3),
+(2, 39, 3),
+(2, 43, 3),
+(2, 44, 3),
 (2, 45, 3),
+(2, 51, 3),
 (4, 41, 3),
 (5, 39, 3),
 (6, 41, 3),
-(8, 41, 3);
+(8, 41, 3),
+(10, 41, 3);
 
 -- --------------------------------------------------------
 
@@ -135,6 +159,14 @@ CREATE TABLE `links` (
   `post_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `links`
+--
+
+INSERT INTO `links` (`id`, `path`, `post_id`) VALUES
+(21, 'uploads/Template.pdf', 9),
+(22, 'uploads/Template-đã chuyển đổi.pdf', 9);
+
 -- --------------------------------------------------------
 
 --
@@ -147,13 +179,20 @@ CREATE TABLE `posts` (
   `title` varchar(255) DEFAULT NULL,
   `details` text DEFAULT NULL,
   `type` int(11) NOT NULL,
-  `topic` int(11) DEFAULT NULL,
+  `topic` varchar(255) DEFAULT NULL,
   `limit_score` int(3) DEFAULT NULL,
   `date_created` date NOT NULL,
   `limit_time` date DEFAULT NULL,
   `num_comments` int(11) DEFAULT NULL,
   `num_views` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `posts`
+--
+
+INSERT INTO `posts` (`id`, `user_id`, `title`, `details`, `type`, `topic`, `limit_score`, `date_created`, `limit_time`, `num_comments`, `num_views`) VALUES
+(9, 41, 'Final Test', 'Làm xong nộp trên elit', 1, 'Exam', 100, '2020-11-29', '2020-12-05', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -166,6 +205,15 @@ CREATE TABLE `post_types` (
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `post_types`
+--
+
+INSERT INTO `post_types` (`id`, `name`) VALUES
+(2, 'ANOUNMENT'),
+(1, 'ASSIGNMENT'),
+(3, 'MATERIAL');
+
 -- --------------------------------------------------------
 
 --
@@ -177,6 +225,17 @@ CREATE TABLE `post_visibility` (
   `user_id` int(11) NOT NULL,
   `class_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `post_visibility`
+--
+
+INSERT INTO `post_visibility` (`post_id`, `user_id`, `class_id`) VALUES
+(9, 34, 2),
+(9, 39, 2),
+(9, 51, 2),
+(9, 41, 2),
+(9, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -214,7 +273,7 @@ CREATE TABLE `users` (
   `tel` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
   `verified` tinyint(1) NOT NULL,
-  `avatar` varchar(256) DEFAULT NULL
+  `avatar` varchar(256) DEFAULT 'img/avatar.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -228,7 +287,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `fullname`, `birth`,
 (41, 'vivo22', '$2y$10$wS5OY.pZorQPlWwmlAsXe.WD.goHD7ncxz2YUdX2wvBzZb3fsS80i', 'tuongvivo222@gmail.com', 'Vo Tuong Vi', '2020-11-10', '', '5f6e5bf07a589bcb8055f4ba0ffd466ce072f49dadcb8b7f5042142b3823550402409678d854241df0a1107b5976fcd1b67c', 1, 'img/avatar.png'),
 (43, 'lanhuong1234', '$2y$10$sYtkakD.vXl3i8CwyHOjIO8u2a5qZVBFGSW8fFPyocPVQOpP9Rvsm', 'langhuongnnguyen@gmail.com', 'Lan Cam Suc', '2020-11-13', '01234744615', '441b413faa6d931631f2d019c8ea90e3a6239bd321b67bd92d7c1e7810db276133ffe9fe26d087b49b8c7db6be1434250455', 1, 'img/avatar.png'),
 (44, 'binh1234', '$2y$10$r1EdWuvHlMOEG4QWJquFWOzBvAgkBLw3qq0JY67052UmRD1A9pOfC', 'binhnguyen1234@gmail.com', 'Nguyễn Quốc Bình', '2020-10-31', '0947355907', 'd680d45d9f65f4371204a40373a6b1d8b44097494bb41ee422b99c7f61fe426c5f6eb8a4f4d88d231964054bf4160aa90325', 1, 'img/avatar.png'),
-(45, 'tunguyen', '$2y$10$.w7u9NYJUxKzwKlmuGB3UOIrYsBPd4R7lzusNXTRfE2g3aUUBeMDi', 'tunguyen1234@gmail.com', 'Nguyễn Đình Tú', '2020-11-04', '', '5d968d0b6326008bb16df5e4cb117130ece99974c4903a037dd6626164768f35e89790d4202b5464bc89521cedf4713f8463', 1, 'img/avatar.png');
+(45, 'tunguyen', '$2y$10$.w7u9NYJUxKzwKlmuGB3UOIrYsBPd4R7lzusNXTRfE2g3aUUBeMDi', 'tunguyen1234@gmail.com', 'Nguyễn Đình Tú', '2020-11-04', '', '5d968d0b6326008bb16df5e4cb117130ece99974c4903a037dd6626164768f35e89790d4202b5464bc89521cedf4713f8463', 1, 'img/avatar.png'),
+(51, 'huy2', '$2y$10$3D2wfcnu8cWCvhTL5y02cO1O/t1.4/333vIQTmKll0Dxm8dI9LnyC', 'clone20011001@gmail.com', 'huy2', '2020-11-20', '0947355907', '0b716abe741e0eb6313c6aeb727b322a825ce3dab32c52aa08171850f12f38ff24dd359879cf03b2b81cdb5cce5095c7b6f7', 1, 'img/avatar.png');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -314,7 +374,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `comments`
@@ -326,19 +386,19 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT cho bảng `links`
 --
 ALTER TABLE `links`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `post_types`
 --
 ALTER TABLE `post_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `roles`
@@ -350,7 +410,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

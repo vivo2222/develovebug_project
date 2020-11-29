@@ -126,7 +126,7 @@
                 insertPostVisibility( $conn,$postCurrId,1,$_SESSION['active_classId']);
                 
                 $total_count = count($_FILES['files']['name']);
-                $errors = $total_count;
+                // $errors = $total_count;
                 for( $i=0 ; $i < $total_count ; $i++ ) {
                     $target_file = $target_dir . $_FILES["files"]["name"][$i];
 
@@ -134,7 +134,7 @@
                         die("Sorry, there was an error uploading your file.");
                     }else{
                         insertPostLink($conn, $target_file, $postCurrId);
-                        $errors .= $target_file;
+                        // $errors .= $target_file;
                     }
                 }
             }else{
