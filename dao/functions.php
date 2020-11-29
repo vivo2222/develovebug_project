@@ -241,4 +241,13 @@
         $isDeleted = $sql->execute();
         return $isDeleted;    
     }
+    function getPostInfo($conn, $postId){
+        $sql =  $conn->prepare("SELECT * FROM posts WHERE id = ?");
+        $sql->bind_param("i", $postId);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
 ?>
