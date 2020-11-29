@@ -12,6 +12,7 @@
                 $activeClassInfo = getClassInfo($conn, $classId)->fetch_assoc();
                 $teacher_list = getPeopleOfClassByRole($conn, $_SESSION['active_classId'], 2);
                 $student_list = getPeopleOfClassByRole($conn, $_SESSION['active_classId'], 3);
+                $all_people = getAllPeopleOfClass($conn, $_SESSION['active_classId']);
             }
         }else{
             unset($_GET['classId']);

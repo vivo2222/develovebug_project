@@ -76,3 +76,10 @@ $("#selectAll").click(function(){
     $(".assignment-visibility input[type=checkbox]").prop('checked', $(this).prop('checked'));
 
 });
+$('button').on('click', function() { 
+    var array = []; 
+    $("input:checkbox[name=type]:checked").each(function() { 
+        array.push($(this).val()); 
+    }); 
+    $('#GFG_DOWN').text(array); 
+}); 

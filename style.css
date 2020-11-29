@@ -1116,6 +1116,7 @@ p.infocenter_captcha_p {
 .page-template-template-ask_question input[type="search"],
 .page-template-template-ask_question input[type="password"],
 .page-template-template-ask_question input[type="email"],
+.page-template-template-ask_question input[type="date"],
 .page-template-template-ask_question textarea,
 .page-template-template-ask_question select {
   padding: 15px 12px;
@@ -1212,6 +1213,7 @@ input.the-title, .the-username, .the-email, .video_id, .the-textarea, .taglist .
   width: 100%;
   margin-top: 0 !important;
   border: 1px solid #dedede;
+  cursor: pointer;
   -moz-transition: border .25s linear, color .25s linear, background-color .25s linear;
   -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
   -o-transition: border .25s linear, color .25s linear, background-color .25s linear;
@@ -1647,11 +1649,14 @@ input[type="file"] {
 }
 .modal-body input{
   padding: 10px 8px;
-  width: 90%;
+  width: 95%;
   font-size: 15px;
   border: 1px solid #dedede ;
   outline: none;
   border-radius: 3px;
+}
+.modal-backdrop{
+  display: none!important;
 }
 @media (max-width: 768px) {
   .hidden-xs {

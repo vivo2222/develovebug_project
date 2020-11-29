@@ -82,6 +82,15 @@
         return $teacher_info;
 
     }
+    function getAllPeopleOfClass($conn, $classId){
+        $sql =  $conn->prepare("SELECT * FROM class_user_role WHERE class_id = ?");
+        $sql->bind_param("i", $classId);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
     function checkEmailExisted($conn, $email){
         $sql =  $conn->prepare("SELECT * FROM users WHERE email = ?");
         $sql->bind_param("s", $email);
@@ -124,7 +133,19 @@
         $isInserted = $sql->execute();
         return $isInserted;
     }
-    function rand_code( $length ) {  
+    function insertPostVisibility($conn, $postId, $userId, $classId){
+        $sql = $conn->prepare("INSERT INTO post_visibility(post_id, user_id, class_id) VALUES (?, ?, ?)");
+        $sql->bind_param('iii', $postId, $userId, $classId);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    function insertPostLink($conn, $path, $postId){
+        $sql = $conn->prepare("INSERT INTO links(path, post_id) VALUES (?, ?)");
+        $sql->bind_param('si', $path, $postId);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    function randCode( $length ) {  
         $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";  
         $size = strlen( $chars );
         $str = "";  
@@ -133,7 +154,7 @@
         }
         return $str;
     }
-    function editClass($conn, $classId, $subject, $semester, $room){
+    function updateClass($conn, $classId, $subject, $semester, $room){
         $sql = $conn->prepare("UPDATE classes SET subject = ?,semester = ?,room = ? WHERE id = ?");
         $sql->bind_param('sssi', $subject, $semester, $room, $classId);
         $isUpdated = $sql->execute();
@@ -165,7 +186,7 @@
         $subject = "Verification classroom account.";
         $to = $email;
         $msg = "<h3>You are invited to join a class by $userMail</h3>";
-        $msg .= "<a href='http://localhost:8888/develovebug_project/insert.php?classId=$classId&isInvited=$isInvited&email=$email&role=$roleId' style='color: #00316b; font-weight: bold;'> Join now! </a>";
+        $msg .= "<a href='http://localhost:8888/develovebug_project/verify.php?classId=$classId&isInvited=$isInvited&email=$email&role=$roleId' style='color: #00316b; font-weight: bold;'> Join now! </a>";
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= "From: TDTU CLASSROOM \r\n";
@@ -208,15 +229,15 @@
         $isUpdated = $sql->execute();
         return $isUpdated;
     }
-    function updatePost($conn, $user_id, $title, $details, $type, $topic, $limit_score, $limit_time){
-        $sql = $conn->prepare("UPDATE posts SET title = ?, details = ?, type = ?, topic = ?, limit_score = ?, limit_time = ? WHERE user_id = ?");
-        $sql->bind_param("ssiiiss", $title, $details, $type, $topic, $limit_score, $limit_time, $user_id);
+    function updatePost($conn, $postId, $title, $details, $type, $topic, $limit_score, $limit_time){
+        $sql = $conn->prepare("UPDATE posts SET title = ?, details = ?, type = ?, topic = ?, limit_score = ?, limit_time = ? WHERE id = ?");
+        $sql->bind_param("", $title, $details, $type, $topic, $limit_score, $limit_time, $postId);
         $isUpdated = $sql->execute();
         return $isUpdated;
     }
     function deletePost($conn, $id){
         $sql = $conn->prepare("DELETE FROM posts WHERE id = ?");
-        $sql->bind_param("?", $id);
+        $sql->bind_param("i", $id);
         $isDeleted = $sql->execute();
         return $isDeleted;    
     }

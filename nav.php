@@ -54,7 +54,7 @@
                             <a class="nav-link" href="classes.php">Classes</a>
                         </li>
                         <li class="nav-item menu-item-pq">
-                            <a class="nav-link" href="post-form.php?classId=<?php echo $activeClassInfo['id']?>">Post questions</a>
+                            <a class="nav-link" href="post-form.php?classId=<?php echo $activeClassInfo['id']?>">Add Post / Share</a>
                         </li>
                     </ul>
                 </div>
@@ -74,7 +74,7 @@
                         <a href="#">About</a>
                     </li>
                     <li class="menu-item-pq">
-                        <a href="post-form.php?classId=<?php echo $activeClassInfo['id']?>">Post questions</a>
+                        <a href="post-form.php?classId=<?php echo $activeClassInfo['id']?>">Add post / Share</a>
                     </li>
                 </ul>
             </nav>
