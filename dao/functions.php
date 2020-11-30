@@ -276,7 +276,7 @@
     }
     function getAssignmentsListOfClass($conn, $type, $classId){
         $sql = $conn->prepare("SELECT * FROM posts WHERE type = ? AND class_id = ?");
-        $sql->bind_param("ii", $type, $class_id);
+        $sql->bind_param("ii", $type, $classId);
         $result = null;
         if ($sql->execute()){
             $result = $sql->get_result();

@@ -494,11 +494,13 @@ textarea {
 .with-sidebar-container ul,
 .with-sidebar-container ul li,
 .with-sidebar-container ul li.active,
-.with-sidebar-container ul li:hover,
 .with-sidebar-container ul li a {
   border: none !important;
   border-radius: none !important;
-  color: #999;
+  color: #000;
+}
+.with-sidebar-container ul li a:hover{
+  color: #be161e!important;
 }
 .with-sidebar-container ul.tab-title li {
   text-align: center;

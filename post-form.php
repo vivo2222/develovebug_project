@@ -127,8 +127,8 @@
                                                                     </svg>
                                                                     Add Category
                                                                 </button>
+                                                                <span class="infocenter-qform-desc">Please choose correct category for the assignment.</span>
                                                             </p>
-                                                            <span class="infocenter-qform-desc">Please choose correct category for the assignment.</span>
                                                         </p>
                                                         <p>
                                                             <label class="required">
