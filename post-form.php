@@ -104,8 +104,26 @@
                                                         <p>
                                                             <label for="assignment-category" class="required">
                                                                 Category
+                                                                <span>*</span>
                                                             </label>
-                                                            <input name="category" type="text" id="category" class="the-title" value>
+                                                            <span class="styled-select">
+                                                                <select name="category" id="category" class="postform">
+                                                                    <option value="">Select a Category</option>
+                                                                    <?php 
+                                                                        if($topic_list->num_rows > 0){
+                                                                            while($topicsList = $topic_list->fetch_assoc()){ 
+                                                                                if(getTopicInfo($conn, $topicsList["topic"])->num_rows > 0){
+                                                                                    $topicInfoArray = getTopicInfo($conn, $topicsList["topic"])->fetch_assoc();
+                                                                    ?>
+                                                                    
+                                                                    <option value="11" class="level-0">HTML</option>
+                                                                    <option value="19" class="level-0">PHP</option>
+                                                                    <option value="10" class="level-0">REACTJS</option>
+                                                                    <?php }}}?>
+                                                                </select>
+                                                            </span>
+                                                            <input name="category" type="text" id="category" class="the-title" placeholder="Or add new topic" value>
+
                                                             <span class="infocenter-qform-desc">Please choose correct category for the assignment.</span>
                                                         </p>
                                                         <p>

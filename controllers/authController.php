@@ -134,7 +134,6 @@
                         die("Sorry, there was an error uploading your file.");
                     }else{
                         insertPostLink($conn, $target_file, $postCurrId);
-                        // $errors .= $target_file;
                     }
                 }
             }else{
@@ -165,15 +164,15 @@
         if(empty($subject)){
             $errors = "Subject required";
         }else{
+            // code can be duplicated, so random code until code is unique.
             while(!insertClass($conn, $subject, $code, $semester, $room, $create_date)){
-                $code= rand_code(6);
+                $code= bin2hex(random_bytes(3));
             }
             $class_id = $conn->insert_id;
             $userId = $_SESSION["userId"];
             if(setUserRole($conn, $class_id, $userId, 2) && setUserRole($conn, $class_id, 1, 1)){
                 header("Location:classes.php");
             }
-            
         }
     }
     if(isset($_POST["edit-class-btn"])){
