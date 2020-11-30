@@ -250,4 +250,13 @@
         }
         return $result;
     }
+    function searchClassByCode($conn, $code){
+        $sql = $conn->prepare("SELECT * FROM classes WHERE code = ?");
+        $sql->bind_param("s", $code);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result;
+        }
+        return $result;
+    }
 ?>
