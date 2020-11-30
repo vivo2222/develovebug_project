@@ -159,7 +159,7 @@
                                                     </svg>
                                                     <ul class="list-group">
                                                         <li class="list-group-item" data-toggle="modal" data-target="#staticBackdrop1">Edit post</li>
-                                                        <li class="list-group-item">Remove post</li>
+                                                        <li class="list-group-item"><button type="submit" name="remove-post-btn">Remove post</button></li>
                                                     </ul>
                                                 </div>
                                                 <div class="overal-post-info-box">

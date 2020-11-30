@@ -192,7 +192,7 @@
         $subject = "Verification classroom account.";
         $to = $email;
         $msg = "<h3>You are invited to join a class by $userMail</h3>";
-        $msg .= "<a href='http://localhost:8888/develovebug_project/verify.php?classId=$classId&isInvited=$isInvited&email=$email&role=$roleId' style='color: #00316b; font-weight: bold;'> Join now! </a>";
+        $msg .= "<a href='http://localhost/develovebug_project/verify.php?classId=$classId&isInvited=$isInvited&email=$email&role=$roleId' style='color: #00316b; font-weight: bold;'> Join now! </a>";
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= "From: TDTU CLASSROOM \r\n";
