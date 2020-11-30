@@ -163,14 +163,14 @@
     function deleteClass($conn, $classId){
         $sql = $conn->prepare("DELETE FROM classes WHERE id = ?");
         $sql->bind_param("i",$classId);
-        $isDelete = $sql->execute();
-        return $isDelete;
+        $isDeleted = $sql->execute();
+        return $isDeleted;
     }
     function deleteClassUserRole($conn, $classId){
         $sql = $conn->prepare("DELETE FROM class_user_role WHERE class_id = ?");
         $sql->bind_param("i", $classId);
-        $isDelete = $sql->execute();
-        return $isDelete;
+        $isDeleted = $sql->execute();
+        return $isDeleted;
     }
     function sendMailVerify($email, $token){
         $subject = "Verification classroom account.";
@@ -235,7 +235,7 @@
         $isUpdated = $sql->execute();
         return $isUpdated;
     }
-    function deletePost($conn, $id){
+    function deletePostById($conn, $id){
         $sql = $conn->prepare("DELETE FROM posts WHERE id = ?");
         $sql->bind_param("i", $id);
         $isDeleted = $sql->execute();
@@ -244,6 +244,78 @@
     function getPostInfo($conn, $postId){
         $sql =  $conn->prepare("SELECT * FROM posts WHERE id = ?");
         $sql->bind_param("i", $postId);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function searchClassByCode($conn, $code){
+        $sql = $conn->prepare("SELECT * FROM classes WHERE code = ?");
+        $sql->bind_param("s", $code);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getPostLinkById($conn, $post_id){
+        $sql = $conn->prepare("SELECT * FROM links WHERE post_id = ?");
+        $sql->bind_param("i", $post_id);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getAssignmentList($conn, $type){
+        $sql = $conn->prepare("SELECT * FROM posts WHERE type = ?");
+        $sql->bind_param("i", $type);
+        $result = null;
+        if ($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getPostIdbyClassIdAndUserId($conn, $user_id, $class_id){
+        $sql = $conn->prepare("SELECT * FROM post_visibility WHERE user_id = ? and class_id = ?");
+        $sql->bind_param("ii",$user_id, $class_id);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function deleteLink($conn, $id){
+        $sql = $conn->prepare("DELETE FROM links WHERE ID = ?");
+        $sql->bind_param("i", $id);
+        $isDeleted = $sql->execute();
+        return $isDeleted;
+    }
+    function deleteVisibility($conn, $post_id){
+        $sql = $conn->prepare("DELETE FROM post_visibility WHERE post_id = ?");
+        $sql->bind_param("i", $post_id);
+        $isDeleted = $sql->execute();
+        return $isDeleted;
+    }
+    function updatePassword($conn, $password, $user_id){
+        $sql = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+        $sql->bind_param("si", $password, $user_id);
+        $isUpdated = $sql->execute();
+        return $isUpdated;
+    }
+    function getAllTopicsOfClass($conn, $class_id, $type){
+        $sql = $conn->prepare("SELECT * FROM classes WHERE class_id = ? and type = ?");
+        $sql->bind_param("ii", $class_id, $type);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getTopicInfoById($conn, $id){
+        $sql = $conn->prepare("SELECT * FROM topics WHERE id = ?");
+        $sql->bind_param("i", $id);
         $result = null;
         if($sql->execute()){
             $result = $sql->get_result();

@@ -110,7 +110,7 @@
                             </svg>
                             <ul class="list-group">
                                 <li class="list-group-item" data-toggle="modal" data-target="#staticBackdrop">Edit class</li>
-                                <li class="list-group-item" data-toggle="modal" data-target="#staticBackdrop2">Remove class</li>
+                                <li class="list-group-item" data-toggle="modal" data-target="#staticBackdrop2"><button type="submit" name="remove-post-btn">Remove class</button></li>
                             </ul>
                         </span>
                         <?php } ?>
