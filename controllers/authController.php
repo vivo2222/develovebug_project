@@ -97,7 +97,7 @@
         }
     }
 
-    /** =====================================CLICK POST FORM BUTTON ACTION=========================================== */
+    /** =====================================CLICK POST FORM BUTTON ACTION=========================================== **/
 
     if (isset($_POST["post-form-btn"])){
         $target_dir = "uploads/";
@@ -196,16 +196,19 @@
             die("Can't update");
         }
     }
+    /** =====================================CLICK DELETE FORM BUTTON ACTION=========================================== **/
     if(isset($_POST["delete-btn"])){
         $classId = $_SESSION["active_classId"];
         deleteClassUserRole($conn, $classId);
         deleteClass($conn, $classId);
         header("Location:classes.php");
     }
+/** =====================================CLICK JOIN FORM BUTTON ACTION=========================================== **/
     if(isset($_POST["join-class-btn"])){
         $code = $_POST["classCode"];
         $classId = getClassIdByCode($conn, $code);
         $user_id = $_SESSION["userId"];
         insertStudent($conn, $class_id, $user_id, 3);
     }
+    
 ?>
