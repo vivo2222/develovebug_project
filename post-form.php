@@ -104,7 +104,6 @@
                                                         <p>
                                                             <label for="category" class="required">
                                                                 Category
-                                                                <span>*</span>
                                                             </label>
                                                             <span class="styled-select">
                                                                 <select name="category" id="category" class="postform">
