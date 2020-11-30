@@ -210,5 +210,4 @@
         $user_id = $_SESSION["userId"];
         insertStudent($conn, $class_id, $user_id, 3);
     }
-    
 ?>
