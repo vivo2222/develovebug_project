@@ -13,7 +13,7 @@
                 $teacher_list = getPeopleOfClassByRole($conn, $_SESSION['active_classId'], 2);
                 $student_list = getPeopleOfClassByRole($conn, $_SESSION['active_classId'], 3);
                 $all_people = getAllPeopleOfClass($conn, $_SESSION['active_classId']);
-                // $topic_list = getAllTopicsOfClass($conn, $_SESSION['active_classId']);
+                $topic_list = getAllTopicsOfClass($conn, $_SESSION['active_classId'], 1);
             }
         }else{
             unset($_GET['classId']);

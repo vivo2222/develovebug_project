@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 29, 2020 lúc 03:15 AM
+-- Thời gian đã tạo: Th10 30, 2020 lúc 10:55 AM
 -- Phiên bản máy phục vụ: 10.4.13-MariaDB
 -- Phiên bản PHP: 7.4.7
 
@@ -159,14 +159,6 @@ CREATE TABLE `links` (
   `post_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Đang đổ dữ liệu cho bảng `links`
---
-
-INSERT INTO `links` (`id`, `path`, `post_id`) VALUES
-(21, 'uploads/Template.pdf', 9),
-(22, 'uploads/Template-đã chuyển đổi.pdf', 9);
-
 -- --------------------------------------------------------
 
 --
@@ -179,20 +171,14 @@ CREATE TABLE `posts` (
   `title` varchar(255) DEFAULT NULL,
   `details` text DEFAULT NULL,
   `type` int(11) NOT NULL,
-  `topic` varchar(255) DEFAULT NULL,
+  `topic` int(11) DEFAULT NULL,
   `limit_score` int(3) DEFAULT NULL,
   `date_created` date NOT NULL,
   `limit_time` date DEFAULT NULL,
-  `num_comments` int(11) DEFAULT NULL,
-  `num_views` int(11) DEFAULT NULL
+  `num_comments` int(11) NOT NULL,
+  `num_views` int(11) NOT NULL,
+  `class_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Đang đổ dữ liệu cho bảng `posts`
---
-
-INSERT INTO `posts` (`id`, `user_id`, `title`, `details`, `type`, `topic`, `limit_score`, `date_created`, `limit_time`, `num_comments`, `num_views`) VALUES
-(9, 41, 'Final Test', 'Làm xong nộp trên elit', 1, 'Exam', 100, '2020-11-29', '2020-12-05', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -223,19 +209,8 @@ INSERT INTO `post_types` (`id`, `name`) VALUES
 CREATE TABLE `post_visibility` (
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `class_id` int(11) DEFAULT NULL
+  `class_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Đang đổ dữ liệu cho bảng `post_visibility`
---
-
-INSERT INTO `post_visibility` (`post_id`, `user_id`, `class_id`) VALUES
-(9, 34, 2),
-(9, 39, 2),
-(9, 51, 2),
-(9, 41, 2),
-(9, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -256,6 +231,17 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 (1, 'ADMIN'),
 (3, 'STUDENT'),
 (2, 'TEACHER');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `topics`
+--
+
+CREATE TABLE `topics` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -338,8 +324,10 @@ ALTER TABLE `links`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `topic_class_index` (`topic`,`class_id`),
   ADD KEY `posts_fk0` (`user_id`),
-  ADD KEY `posts_fk1` (`type`);
+  ADD KEY `posts_fk1` (`type`),
+  ADD KEY `posts_fk2` (`class_id`);
 
 --
 -- Chỉ mục cho bảng `post_types`
@@ -349,9 +337,22 @@ ALTER TABLE `post_types`
   ADD UNIQUE KEY `name` (`name`);
 
 --
+-- Chỉ mục cho bảng `post_visibility`
+--
+ALTER TABLE `post_visibility`
+  ADD KEY `visibility_fk0` (`class_id`);
+
+--
 -- Chỉ mục cho bảng `roles`
 --
 ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Chỉ mục cho bảng `topics`
+--
+ALTER TABLE `topics`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
@@ -386,13 +387,13 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT cho bảng `links`
 --
 ALTER TABLE `links`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT cho bảng `post_types`
@@ -405,6 +406,12 @@ ALTER TABLE `post_types`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT cho bảng `topics`
+--
+ALTER TABLE `topics`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
@@ -449,7 +456,15 @@ ALTER TABLE `links`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_fk0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `posts_fk1` FOREIGN KEY (`type`) REFERENCES `post_types` (`id`);
+  ADD CONSTRAINT `posts_fk1` FOREIGN KEY (`type`) REFERENCES `post_types` (`id`),
+  ADD CONSTRAINT `posts_fk2` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`),
+  ADD CONSTRAINT `posts_fk3` FOREIGN KEY (`topic`) REFERENCES `topics` (`id`);
+
+--
+-- Các ràng buộc cho bảng `post_visibility`
+--
+ALTER TABLE `post_visibility`
+  ADD CONSTRAINT `visibility_fk0` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

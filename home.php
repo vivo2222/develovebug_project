@@ -144,7 +144,7 @@
                                     <blockquote class="blockquote mb-0">
                                         <ul class="assignments-list">
                                             <?php 
-                                                $assignments_list = getAssignmentsList($conn, 1);
+                                                $assignments_list = getAssignmentsListOfClass($conn, 1, $classInfoArray['id']);
                                                 if($assignments_list->num_rows > 0){
                                                     while($assignmentsList = $assignments_list->fetch_assoc()){ 
                                                         if(getClassInfo($conn, $assignmentsList["id"])->num_rows > 0){

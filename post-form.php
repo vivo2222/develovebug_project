@@ -5,7 +5,7 @@
     }
     if(!isset($_SESSION['active_classId']))
         header("Location: home.php");
-	require "controllers/roleController.php";
+    require "controllers/roleController.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -102,28 +102,33 @@
                                                             <span class="infocenter-qform-desc">Please type limit score here.</span>
                                                         </p>
                                                         <p>
-                                                            <label for="assignment-category" class="required">
+                                                            <label for="category" class="required">
                                                                 Category
                                                                 <span>*</span>
                                                             </label>
                                                             <span class="styled-select">
                                                                 <select name="category" id="category" class="postform">
-                                                                    <option value="">Select a Category</option>
+                                                                    <option value="-1">Select a Category</option>
                                                                     <?php 
-                                                                        if($topic_list->num_rows > 0){
-                                                                            while($topicsList = $topic_list->fetch_assoc()){ 
-                                                                                if(getTopicInfo($conn, $topicsList["topic"])->num_rows > 0){
-                                                                                    $topicInfoArray = getTopicInfo($conn, $topicsList["topic"])->fetch_assoc();
-                                                                    ?>
                                                                     
-                                                                    <option value="11" class="level-0">HTML</option>
-                                                                    <option value="19" class="level-0">PHP</option>
-                                                                    <option value="10" class="level-0">REACTJS</option>
-                                                                    <?php }}}?>
+                                                                    if($topic_list->num_rows > 0){
+                                                                        while($topicsList = $topic_list->fetch_assoc()){ 
+                                                                            if(getTopicInfo($conn, $topicsList["topic"])->num_rows > 0){
+                                                                                $topicInfoArray = getTopicInfo($conn, $topicsList["topic"])->fetch_assoc();
+                                                                    ?>
+                                                                    <option value="<?php echo $topicInfoArray["id"]?>" class="level-0"><?php echo $topicInfoArray["name"]?></option>
+                                                                    <?php }}} ?>
                                                                 </select>
                                                             </span>
-                                                            <input name="category" type="text" id="category" class="the-title" placeholder="Or add new topic" value>
-
+                                                            <input type="text" id="add-new-category" class="the-title" placeholder="Add new topic" value>
+                                                            <p class="form-submit add_category">
+                                                                <button type="button" class="button color small submit add_poll_button add_category_btn">
+                                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="add-file bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                                                    </svg>
+                                                                    Add Category
+                                                                </button>
+                                                            </p>
                                                             <span class="infocenter-qform-desc">Please choose correct category for the assignment.</span>
                                                         </p>
                                                         <p>
