@@ -83,3 +83,12 @@ $('button').on('click', function() {
     }); 
     $('#GFG_DOWN').text(array); 
 }); 
+$('.add_category_btn').on('click', function(){
+    if($('#add-new-category').val() != ""){
+        $option = $("<option></option>");
+        $option.val($('#add-new-category').val());
+        $option.text($option.val()); 
+        $('#category').append($option);
+    }
+
+});

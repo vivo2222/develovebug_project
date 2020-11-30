@@ -121,9 +121,9 @@
         $isInserted = $sql->execute();
         return $isInserted;
     }
-    function insertPost($conn, $userId, $title, $details, $type, $topic, $limitScore, $dateCreated, $limitTime, $numComments, $numViews){
-        $sql =  $conn->prepare("INSERT INTO posts(user_id, title, details, type, topic, limit_score, date_created, limit_time, num_comments, num_views) VALUES (?,?,?,?,?,?,?,?,?,?)");
-        $sql->bind_param("issisissii", $userId, $title, $details, $type, $topic, $limitScore, $dateCreated, $limitTime, $numComments, $numViews);
+    function insertPost($conn, $userId, $title, $details, $type, $topic, $limitScore, $dateCreated, $limitTime, $numComments, $numViews, $classId){
+        $sql =  $conn->prepare("INSERT INTO posts(user_id, title, details, type, topic, limit_score, date_created, limit_time, num_comments, num_views, class_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+        $sql->bind_param("issiiissiii", $userId, $title, $details, $type, $topic, $limitScore, $dateCreated, $limitTime, $numComments, $numViews, $classId);
         $isInserted = $sql->execute();
         return $isInserted;
     }
@@ -142,6 +142,12 @@
     function insertPostLink($conn, $path, $postId){
         $sql = $conn->prepare("INSERT INTO links(path, post_id) VALUES (?, ?)");
         $sql->bind_param('si', $path, $postId);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    function insertTopic($conn, $name){
+        $sql = $conn->prepare("INSERT INTO topics(name) VALUES (?)");
+        $sql->bind_param('s', $name);
         $isInserted = $sql->execute();
         return $isInserted;
     }
@@ -268,7 +274,16 @@
         }
         return $result;
     }
-    function getAssignmentList($conn, $type){
+    function getAssignmentsListOfClass($conn, $type, $classId){
+        $sql = $conn->prepare("SELECT * FROM posts WHERE type = ? AND class_id = ?");
+        $sql->bind_param("ii", $type, $class_id);
+        $result = null;
+        if ($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getAllAssignmentsList($conn, $type){
         $sql = $conn->prepare("SELECT * FROM posts WHERE type = ?");
         $sql->bind_param("i", $type);
         $result = null;
@@ -305,7 +320,7 @@
         return $isUpdated;
     }
     function getAllTopicsOfClass($conn, $class_id, $type){
-        $sql = $conn->prepare("SELECT * FROM classes WHERE class_id = ? and type = ?");
+        $sql = $conn->prepare("SELECT * FROM posts WHERE class_id = ? and type = ?");
         $sql->bind_param("ii", $class_id, $type);
         $result = null;
         if($sql->execute()){
@@ -313,9 +328,9 @@
         }
         return $result;
     }
-    function getTopicInfoById($conn, $id){
+    function getTopicInfo($conn, $topicId){
         $sql = $conn->prepare("SELECT * FROM topics WHERE id = ?");
-        $sql->bind_param("i", $id);
+        $sql->bind_param("i", $topicId);
         $result = null;
         if($sql->execute()){
             $result = $sql->get_result();

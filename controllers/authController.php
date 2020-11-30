@@ -97,26 +97,33 @@
         }
     }
 
-    /** =====================================CLICK POST FORM BUTTON ACTION=========================================== **/
+    /** =====================================CLICK POST FORM BUTTON ACTION=========================================== */
 
     if (isset($_POST["post-form-btn"])){
         $target_dir = "uploads/";
 
         $title = filter_var($_POST["title"], FILTER_SANITIZE_STRING);
         $limitScore = filter_var($_POST["limit_score"], FILTER_SANITIZE_NUMBER_INT);
-        $category = filter_var($_POST["category"], FILTER_SANITIZE_STRING);
         $details = filter_var($_POST["details"], FILTER_SANITIZE_STRING);
         $dateCreated = date('yy-m-d');
-        if(isset($_POST['limit_time'])){
-            $limitTime = $_POST['limit_time'];
+        $limitTime = $_POST['limit_time'];
+        if(empty($_POST['limit_time'])){
+            $limitTime = $dateCreated;
         }
-
+        $category = 0;
+        $category_tmp = $_POST["category"];
+        if(!empty($category_tmp)){
+            if(gettype($category_tmp) == 'string'){
+                insertTopic($conn, $category_tmp);
+                $category = $conn->insert_id;
+            }
+        }
         if(empty($title)){
             $errors = "Title required";
         }else if(empty($_POST['check_list_visibility'])){
             $errors = "Select students who can see your post please!";
         }else{
-            if(insertPost($conn, $_SESSION['userId'], $title, $details, 1, $category, $limitScore, $dateCreated, $limitTime, 0, 0)){
+            if(insertPost($conn, $_SESSION['userId'], $title, $details, 1, $category, $limitScore, $dateCreated, $limitTime, 0, 0,$_SESSION['active_classId'])){
                 $postCurrId = $conn->insert_id;
                 $check_list_visibility = $_POST['check_list_visibility'];
                 foreach($_POST['check_list_visibility'] as $selected){
@@ -134,7 +141,6 @@
                         die("Sorry, there was an error uploading your file.");
                     }else{
                         insertPostLink($conn, $target_file, $postCurrId);
-                        // $errors .= $target_file;
                     }
                 }
             }else{
@@ -165,15 +171,15 @@
         if(empty($subject)){
             $errors = "Subject required";
         }else{
+            // code can be duplicated, so random code until code is unique.
             while(!insertClass($conn, $subject, $code, $semester, $room, $create_date)){
-                $code= rand_code(6);
+                $code= bin2hex(random_bytes(3));
             }
             $class_id = $conn->insert_id;
             $userId = $_SESSION["userId"];
             if(setUserRole($conn, $class_id, $userId, 2) && setUserRole($conn, $class_id, 1, 1)){
                 header("Location:classes.php");
             }
-            
         }
     }
     if(isset($_POST["edit-class-btn"])){
@@ -196,14 +202,12 @@
             die("Can't update");
         }
     }
-    /** =====================================CLICK DELETE FORM BUTTON ACTION=========================================== **/
     if(isset($_POST["delete-btn"])){
         $classId = $_SESSION["active_classId"];
         deleteClassUserRole($conn, $classId);
         deleteClass($conn, $classId);
         header("Location:classes.php");
     }
-/** =====================================CLICK JOIN FORM BUTTON ACTION=========================================== **/
     if(isset($_POST["join-class-btn"])){
         $code = $_POST["classCode"];
         $classId = getClassIdByCode($conn, $code);

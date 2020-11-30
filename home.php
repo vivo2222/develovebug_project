@@ -100,9 +100,9 @@
                         <div class="tab-pane fade show active class-tab" id="class" role="tabpanel" aria-labelledby="class-tab">
                         <?php 
                         if($classes_list->num_rows > 0){
-                            while($list = $classes_list->fetch_assoc()){ 
-                                if(getClassInfo($conn, $list["class_id"])->num_rows > 0){
-                                    $classInfoArray = getClassInfo($conn, $list["class_id"])->fetch_assoc();
+                            while($classesList = $classes_list->fetch_assoc()){ 
+                                if(getClassInfo($conn, $classesList["class_id"])->num_rows > 0){
+                                    $classInfoArray = getClassInfo($conn, $classesList["class_id"])->fetch_assoc();
                                 
                         ?>
                             <div class="card post class-box">
@@ -143,10 +143,16 @@
                                 <div class="card-body">
                                     <blockquote class="blockquote mb-0">
                                         <ul class="assignments-list">
-                                            <li><a href="#">assignments</a></li>
-                                            <li><a href="#">assignments</a></li>
-                                            <li><a href="#">assignments</a></li>
-                                            <li><a href="#">assignments</a></li>
+                                            <?php 
+                                                $assignments_list = getAssignmentsListOfClass($conn, 1, $classInfoArray['id']);
+                                                if($assignments_list->num_rows > 0){
+                                                    while($assignmentsList = $assignments_list->fetch_assoc()){ 
+                                                        if(getClassInfo($conn, $assignmentsList["id"])->num_rows > 0){
+                                                            $assignmentInfoArray = getPostInfo($conn, $assignmentsList["id"])->fetch_assoc();
+                                                            if($assignmentInfoArray['type'] == 1){
+                                            ?>
+                                            <li><a href="post-detail.php?classId=<?php echo $classInfoArray['id']; ?>&postId=<?php echo $assignmentInfoArray["id"]; ?>"><?php echo $assignmentInfoArray["title"]; ?></a></li>
+                                            <?php }}}} ?>
                                         </ul>
                                         <footer class="blockquote-footer">
                                             <cite title="Source Title">    
