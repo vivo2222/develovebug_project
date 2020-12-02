@@ -20,7 +20,7 @@
             <form action="" class="join" method="POST">
                 <div class="field">
                 <p>Ask your teacher for class code</p>
-                <input type="text" placeholder="Class Code" required>
+                <input type="text" placeholder="Class Code" name="code" required>
                 </div>
                 <div class="field btn">
                 <div class="btn-layer"></div>

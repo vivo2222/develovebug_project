@@ -91,6 +91,46 @@
         }
         return $result;
     }
+    function getAllUsers($conn){
+        $sql = "SELECT * FROM users";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function getAllClasses($conn){
+        $sql = "SELECT * FROM users";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function getAllComments($conn){
+        $sql = "SELECT * FROM comments";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function getAllPosts($conn){
+        $sql = "SELECT * FROM posts";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    function getAllCommentsOfPost($conn, $postId){
+        $sql =  $conn->prepare("SELECT * FROM comments WHERE post_id = ?");
+        $sql->bind_param("i", $postId);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function checkUserVisibility($conn, $postId, $userId){
+        $sql =  $conn->prepare("SELECT * FROM post_visibility WHERE post_id = ? AND user_id = ?");
+        $sql->bind_param("ii", $postId, $userId);
+        if($sql->execute()){
+            $result = $sql->get_result();
+            if($result->num_rows > 0)
+                return TRUE;
+            return FALSE;
+        }
+        return FALSE;
+    }
     function checkEmailExisted($conn, $email){
         $sql =  $conn->prepare("SELECT * FROM users WHERE email = ?");
         $sql->bind_param("s", $email);
@@ -121,9 +161,9 @@
         $isInserted = $sql->execute();
         return $isInserted;
     }
-    function insertPost($conn, $userId, $title, $details, $type, $topic, $limitScore, $dateCreated, $limitTime, $numComments, $numViews, $classId){
-        $sql =  $conn->prepare("INSERT INTO posts(user_id, title, details, type, topic, limit_score, date_created, limit_time, num_comments, num_views, class_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
-        $sql->bind_param("issiiissiii", $userId, $title, $details, $type, $topic, $limitScore, $dateCreated, $limitTime, $numComments, $numViews, $classId);
+    function insertPost($conn, $userId, $title, $details, $type, $topic, $limitScore, $dateCreated, $limitTime, $numComments, $classId){
+        $sql =  $conn->prepare("INSERT INTO posts(user_id, title, details, type, topic, limit_score, date_created, limit_time, num_comments, class_id) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $sql->bind_param("issiiissii", $userId, $title, $details, $type, $topic, $limitScore, $dateCreated, $limitTime, $numComments, $classId);
         $isInserted = $sql->execute();
         return $isInserted;
     }
@@ -145,9 +185,21 @@
         $isInserted = $sql->execute();
         return $isInserted;
     }
+    function insertStdFiles($conn, $targetFile, $dateCreated, $postId, $userId){
+        $sql = $conn->prepare("INSERT INTO student_files(path, date_created, post_id, user_id) VALUES (?, ?, ?, ?)");
+        $sql->bind_param('ssii', $targetFile, $dateCreated, $postId, $userId);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
     function insertTopic($conn, $name){
         $sql = $conn->prepare("INSERT INTO topics(name) VALUES (?)");
         $sql->bind_param('s', $name);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    function insertComment($conn, $userId, $content, $postId, $isPublic){
+        $sql = $conn->prepare("INSERT INTO comments(user_id, content, post_id, public) VALUES (?,?,?,?)");
+        $sql->bind_param('isii', $userId, $content, $postId, $isPublic);
         $isInserted = $sql->execute();
         return $isInserted;
     }
@@ -181,7 +233,29 @@
     function sendMailVerify($email, $token){
         $subject = "Verification classroom account.";
         $to = $email;
-        $msg = "<a href='http://localhost/develovebug_project/verify.php?token=$token' style='color: #00316b; font-weight: bold;'> Register now! </a>";
+        $msg = "<a href='http://localhost:8888/develovebug_project/verify.php?token=$token' style='color: #00316b; font-weight: bold;'> Register now! </a>";
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From: TDTU CLASSROOM \r\n";
+        $is_sent = mail($to,$subject,$msg,$headers);
+        return $is_sent;
+    }
+    function sendMailReset($email){
+        $subject = "Reset password";
+        $to = $email;
+        $msg = "<h3>You required to reset your password</h3>";
+        $msg .= "<a href='http://localhost:8888/develovebug_project/verify.php?m=$email' style='color: #00316b; font-weight: bold;'> Click here to reset now! (validate in 60 secs) </a>";
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From: TDTU CLASSROOM \r\n";
+        $is_sent = mail($to,$subject,$msg,$headers);
+        return $is_sent;
+    }
+    function sendMailRequire($teaEmail, $stdEmail, $classSubject, $classId, $isInvited, $roleId){
+        $subject = "A request to join class";
+        $to = $teaEmail;
+        $msg = "<h3>".$stdEmail." required to join ".$classSubject."</h3>";
+        $msg .= "<a href='http://localhost:8888/develovebug_project/verify.php?ci=$classId&iv=$isInvited&im=$stdEmail&r=$roleId' style='color: #00316b; font-weight: bold;'> Click here to accept now!</a>";
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= "From: TDTU CLASSROOM \r\n";
@@ -189,10 +263,10 @@
         return $is_sent;
     }
     function sendMailInvite($email, $classId, $isInvited, $roleId, $userMail){
-        $subject = "Verification classroom account.";
+        $subject = "Invite join into class.";
         $to = $email;
         $msg = "<h3>You are invited to join a class by $userMail</h3>";
-        $msg .= "<a href='http://localhost/develovebug_project/verify.php?classId=$classId&isInvited=$isInvited&email=$email&role=$roleId' style='color: #00316b; font-weight: bold;'> Join now! </a>";
+        $msg .= "<a href='http://localhost:8888/develovebug_project/verify.php?ci=$classId&iv=$isInvited&im=$email&r=$roleId' style='color: #00316b; font-weight: bold;'> Join now! </a>";
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= "From: TDTU CLASSROOM \r\n";
@@ -215,12 +289,6 @@
         $isRemoved = $sql->execute();
         return $isRemoved;
     }
-    function insertStudent($conn, $classId, $userId, $userRole){
-        $sql = $conn->prepare("INSERT INTO class_user_role(class_id, user_id, role_id) VALUES(?, ?, ?)");
-        $sql->bind_param("iii",$classId, $userId, $userRole);
-        $isInserted = $sql->execute();
-        return $isInserted;
-    }
     function getClassIdByCode($conn, $code){
         $sql = $conn->prepare("SELECT id FROM classes WHERE code = ?");
         $sql->bind_param("s", $code);
@@ -235,9 +303,15 @@
         $isUpdated = $sql->execute();
         return $isUpdated;
     }
-    function updatePost($conn, $postId, $title, $details, $type, $topic, $limit_score, $limit_time){
-        $sql = $conn->prepare("UPDATE posts SET title = ?, details = ?, type = ?, topic = ?, limit_score = ?, limit_time = ? WHERE id = ?");
-        $sql->bind_param("", $title, $details, $type, $topic, $limit_score, $limit_time, $postId);
+    function updatePost($conn, $postId, $title, $details, $limit_score, $limit_time){
+        $sql = $conn->prepare("UPDATE posts SET title = ?, details = ?, limit_score = ?, limit_time = ? WHERE id = ?");
+        $sql->bind_param("ssisi", $title, $details, $limit_score, $limit_time, $postId);
+        $isUpdated = $sql->execute();
+        return $isUpdated;
+    }
+    function updateNumComments($conn, $postId, $numCmts){
+        $sql = $conn->prepare("UPDATE posts SET num_comments = ? WHERE id = ?");
+        $sql->bind_param("ii", $numCmts, $postId);
         $isUpdated = $sql->execute();
         return $isUpdated;
     }
@@ -265,6 +339,15 @@
         }
         return $result;
     }
+    function searchClasses($conn, $key){
+        $sql = $conn->prepare("SELECT * FROM classes WHERE code = ? OR subject = ?");
+        $sql->bind_param("ss", $key, $key);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
     function getPostLinkById($conn, $post_id){
         $sql = $conn->prepare("SELECT * FROM links WHERE post_id = ?");
         $sql->bind_param("i", $post_id);
@@ -274,7 +357,16 @@
         }
         return $result;
     }
-    function getAssignmentsListOfClass($conn, $type, $classId){
+    function getStdFilesOfPost($conn, $post_id){
+        $sql = $conn->prepare("SELECT * FROM student_files WHERE post_id = ?");
+        $sql->bind_param("i", $post_id);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getPostsListOfClassByType($conn, $type, $classId){
         $sql = $conn->prepare("SELECT * FROM posts WHERE type = ? AND class_id = ?");
         $sql->bind_param("ii", $type, $classId);
         $result = null;
@@ -283,9 +375,27 @@
         }
         return $result;
     }
-    function getAllAssignmentsList($conn, $type){
+    function getAllPostsByType($conn, $type){
         $sql = $conn->prepare("SELECT * FROM posts WHERE type = ?");
         $sql->bind_param("i", $type);
+        $result = null;
+        if ($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getAllAssignmentsOfClassssByTopic($conn, $type, $classId, $topicId){
+        $sql = $conn->prepare("SELECT * FROM posts WHERE type = ? AND class_id = ? AND topic = ?");
+        $sql->bind_param("iii", $type, $classId, $topicId);
+        $result = null;
+        if ($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getAllPostsOfClass($conn, $classId){
+        $sql = $conn->prepare("SELECT * FROM posts WHERE class_id = ?");
+        $sql->bind_param("i", $classId);
         $result = null;
         if ($sql->execute()){
             $result = $sql->get_result();
@@ -301,9 +411,9 @@
         }
         return $result;
     }
-    function deleteLink($conn, $id){
-        $sql = $conn->prepare("DELETE FROM links WHERE ID = ?");
-        $sql->bind_param("i", $id);
+    function deleteLink($conn, $postId){
+        $sql = $conn->prepare("DELETE FROM links WHERE post_id = ?");
+        $sql->bind_param("i", $postId);
         $isDeleted = $sql->execute();
         return $isDeleted;
     }
@@ -313,15 +423,24 @@
         $isDeleted = $sql->execute();
         return $isDeleted;
     }
-    function updatePassword($conn, $password, $user_id){
-        $sql = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
-        $sql->bind_param("si", $password, $user_id);
+    function updatePassword($conn, $password, $email){
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = $conn->prepare("UPDATE users SET password = ? WHERE email = ?");
+        $sql->bind_param("ss", $password, $email);
         $isUpdated = $sql->execute();
         return $isUpdated;
     }
-    function getAllTopicsOfClass($conn, $class_id, $type){
-        $sql = $conn->prepare("SELECT * FROM posts WHERE class_id = ? and type = ?");
-        $sql->bind_param("ii", $class_id, $type);
+    function isResetSessionExpired($start) {
+        $reset_session_duration = 60; 
+        $current_time = time();
+        if(((time() - $start) < $reset_session_duration)){ 
+            return true; 
+        } 
+        return false;
+    }
+    function getAllTopicsOfClass($conn, $classId){
+        $sql = $conn->prepare("SELECT * FROM posts WHERE class_id = ?");
+        $sql->bind_param("i", $classId);
         $result = null;
         if($sql->execute()){
             $result = $sql->get_result();

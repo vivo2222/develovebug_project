@@ -5,6 +5,11 @@
         exit();
     }
     require "controllers/authController.php";
+    $titleForm = 'Login';
+    if(isset($_GET['rs'])||isset($_GET['m'])){
+        $titleForm = 'Reset Password';
+    }
+
 //    $errors = "";
 ?>
 <!doctype html>
@@ -18,24 +23,40 @@
     <div class="row">
         <div class="form-div col-md-4 offset-md-4">
             <form action="" method="post" id="login-form">
-                <div class="form-title"><h3 class="text-center">Login</h3></div>
+                <div class="form-title"><h3 class="text-center"><?php echo $titleForm;?></h3></div>
                 <?php if ($errors != "") {?>
                     <div class="alert alert-danger" role="alert">
                         <?php echo $errors ?>
                     </div>
-                <?php  }?>
+                <?php  }if(!isset($_GET['m'])){?>
                 <div class="form-group">
                     <label for="username">Email or Username</label><br>
                     <input type="text" name="username" placeholder="Enter your email or username" class="form-input" required>
                 </div>
+                <?php } if(!isset($_GET['rs']) || isset($_GET['m'])){?>
                 <div class="form-group">
                     <label for="password">Password</label><br>
                     <input type="password" name="password" placeholder="Enter your password" class="form-input" required>
                 </div>
+                <?php }if(isset($_GET['m'])){?>
                 <div class="form-group">
+                    <label for="password">Re-Password</label><br>
+                    <input type="password" name="re-password" placeholder="Enter your re-password" class="form-input" required>
+                </div>
+                <?php }?>
+                <div class="form-group">
+                    <?php if(!(isset($_GET['rs'])||isset($_GET['m']))){?>
                     <button type="submit" name="login-btn" class="btn btn-block btn-primary btn-lg">Login</button>
+                    <?php } else if(isset($_GET['rs'])){ ?>
+                        <button type="submit" name="reset-btn" class="btn btn-block btn-primary btn-lg">Send mail</button>
+                    <?php } else if(isset($_GET['m'])){ ?>
+                        <button type="submit" name="update-pass-btn" class="btn btn-block btn-primary btn-lg">Change pass</button>
+                    <?php } ?>
                 </div>
                 <p class="text-center">Not yet a member? <a href="index.php">Sign up</a></p>
+                <?php if(!isset($_GET['rs'])){?>
+                    <p class="text-center"><a href="login.php?rs=1">Forgot password? </a></p>
+                <?php }?>
             </form>
         </div>
     </div>

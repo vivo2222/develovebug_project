@@ -5,8 +5,7 @@
             <div class="col-lg-4 col-md-4 col-sm-6 hidden-xs">
                 <ul class="nav top-nav nav-left" id="menu-left-top-bar">
                     <li class="nav-item"><a class="nav-link" href="home.php">HOME</a></li>
-                    <li class="nav-item"><a class="nav-link" href="home.php">NOTE</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">ABOUT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home.php">CALENDAR</a></li>
                 </ul>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
@@ -48,13 +47,10 @@
                             <a class="nav-link active" href="howitworks.php">How it works?</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="bquestion.php">Browser Question</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="classes.php">Classes</a>
                         </li>
                         <li class="nav-item menu-item-pq">
-                            <a class="nav-link" href="post-form.php?classId=<?php echo $activeClassInfo['id']?>">Add Post / Share</a>
+                            <a class="nav-link" href="post-form.php?ci=<?php echo $activeClassInfo['id']?>">Add Post / Share</a>
                         </li>
                     </ul>
                 </div>
@@ -70,11 +66,8 @@
                     <li>
                         <a href="#">Assignments</a>
                     </li>
-                    <li>
-                        <a href="#">About</a>
-                    </li>
                     <li class="menu-item-pq">
-                        <a href="post-form.php?classId=<?php echo $activeClassInfo['id']?>">Add post / Share</a>
+                        <a href="post-form.php?ci=<?php echo $activeClassInfo['id']?>">Add post / Share</a>
                     </li>
                 </ul>
             </nav>

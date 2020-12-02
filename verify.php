@@ -28,39 +28,38 @@ if(isset($_GET["token"])){
 //    echo $conn->error;
     header("Location: index.php");
 }
-if(isset($_GET['classId'], $_GET['isInvited'], $_GET['email'], $_GET['role'])){
-    $userinfo = getUserInfoLogin($conn, $_GET['email']);
+if(isset($_GET['ci'], $_GET['iv'], $_GET['im'], $_GET['r'])){
+    $userinfo = getUserInfoLogin($conn, $_GET['im']);
     if($userinfo->num_rows > 0){
         $userinfo = $userinfo->fetch_assoc();
-        if(setUserRole($conn, $_GET['classId'], $userinfo['id'], $_GET['role'])){
+        if(setUserRole($conn, $_GET['ci'], $userinfo['id'], $_GET['r'])){
             header("Location: home.php");
         }else{
-            echo setUserRole($conn, $_GET['classId'], $userinfo['id'], $_GET['role']);
+            echo setUserRole($conn, $_GET['ci'], $userinfo['id'], $_GET['r']);
         }
     }
 }
-if (isset($_GET['file_id'])) {
-    $id = $_GET['file_id'];
-    $sql = "SELECT * FROM files WHERE id=$id";
-    $result = mysqli_query($conn, $sql);
-    $file = mysqli_fetch_assoc($result);
-    $filepath = 'uploads/' . $file['name'];
+if (isset($_GET['pf'])) {
+    $name= $_GET['pf'];
 
-    if (file_exists($filepath)) {
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename=' . basename($filepath));
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize('uploads/' . $file['name']));
-        readfile('uploads/' . $file['name']);
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/force-download');
+    header("Content-Disposition: attachment; filename=\"" . basename($name) . "\";");
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($name));
+    ob_clean();
+    flush();
+    readfile("your_file_path/".$name); //showing the path to the server where the file is to be download
+    exit;
 
-        $newCount = $file['downloads'] + 1;
-        $updateQuery = "UPDATE files SET downloads=$newCount WHERE id=$id";
-        mysqli_query($conn, $updateQuery);
-        exit;
-    }
-
+}
+if(isset($_GET['m'])){
+    if(isResetSessionExpired($_SESSION['reset_time']))
+        header("Location: login.php?m=".$_GET['m']);
+    else
+        echo time()-$_SESSION['reset_time'];
 }
 ?>

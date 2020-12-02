@@ -490,6 +490,7 @@ textarea {
   z-index: 991;
   background-color: white;
   padding: 20px 0;
+  min-height: 500px;
 }
 .with-sidebar-container ul,
 .with-sidebar-container ul li,
@@ -550,10 +551,27 @@ textarea {
 .title,
 .hagtag-list,
 .assignments-list li,
-.shorten-post-content{
+.shorten-post-content,
+.todo-list-item,
+.todo-list-item span{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.assignments-list{
+  font-size: 15px!important;
+}
+.todo-list {
+  margin: 30px;
+}
+.todo-list-item > *{
+  display: inline-block;
+}
+.todo-list-item span{
+  width: 70%!important;
+}
+.todo-list-item small{
+  float: right;
 }
 .hagtag-list {
   max-width: 20%;
@@ -1118,7 +1136,7 @@ p.infocenter_captcha_p {
 .page-template-template-ask_question input[type="search"],
 .page-template-template-ask_question input[type="password"],
 .page-template-template-ask_question input[type="email"],
-.page-template-template-ask_question input[type="date"],
+.page-template-template-ask_question input[type="datetime-local"],
 .page-template-template-ask_question textarea,
 .page-template-template-ask_question select {
   padding: 15px 12px;
@@ -1587,6 +1605,10 @@ input[type="file"] {
 .comment-box .comment-input:focus{
   border: 1px solid #be161e;
 }
+.comment-box-private{
+  border: none!important;
+  padding: 0!important;
+}
 .post-comment-btn{
   /* color: white; */
   background-color: inherit;
@@ -1619,6 +1641,10 @@ input[type="file"] {
 }
 .topic-label{
   color: black!important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 70%!important;
 }
 .topic-label:hover{
   color: #be161e!important;
@@ -1738,5 +1764,8 @@ input[type="file"] {
   .card-header.post-box-header .post-alter-icon ul {
     left: -300%;
     top: 25px;
+  }
+  .limit-time{
+    float: left!important;
   }
 }

@@ -21,15 +21,14 @@
                 <div class="box_icon box_warp box_no_borde box_no_background">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2>Have a question?</h2>
-                            <p>If you have any question you can ask below or enter what you are looking for!</p>
+                            <h2>Can I help you?</h2>
+                            <p>If you want to find a class, you can ask below or enter what you are looking for by code and subject!</p>
                             <div class="clearfix"></div>
                             <div class="clearfix"></div>
                             <div>
                                 <div id="live-search">
                                     <div id="search-wrap">
-                                        <form method="get" action="" id="searchform"
-                                            class="form-style form-style-2 container">
+                                        <form method="get" action="classes.php" id="searchform" class="form-style form-style-2 container">
                                             <p class="row">
                                                 <input type="text"
                                                     onfocus="if (this.value == this.defaultValue) {this.value = '';}"
@@ -38,8 +37,7 @@
                                                     class="col-md-10" autocapitalize="off" autocomplete="off"
                                                     autocorrect="off">
                                                 <!-- <div class="hidden-xs"></div> -->
-                                                <button type="submit" id="searchsubmit"
-                                                    class="color button small publish-question ask-question-new-class col-md-1">
+                                                <button type="submit" id="searchsubmit" class="color button small publish-question ask-question-new-class col-md-1">
                                                     Search
                                                 </button>
                                             </p>
@@ -98,18 +96,18 @@
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active class-tab" id="class" role="tabpanel" aria-labelledby="class-tab">
-                        <?php 
-                        if($classes_list->num_rows > 0){
-                            while($classesList = $classes_list->fetch_assoc()){ 
-                                if(getClassInfo($conn, $classesList["class_id"])->num_rows > 0){
-                                    $classInfoArray = getClassInfo($conn, $classesList["class_id"])->fetch_assoc();
-                                
-                        ?>
+                            <?php 
+                            if($classes_list->num_rows > 0){
+                                while($classesList = $classes_list->fetch_assoc()){ 
+                                    if(getClassInfo($conn, $classesList["class_id"])->num_rows > 0){
+                                        $classInfoArray = getClassInfo($conn, $classesList["class_id"])->fetch_assoc();
+                                    
+                            ?>
                             <div class="card post class-box">
                                 <div class="card-header">
                                     <div class="title-box">
                                         <div class="title">
-                                            <a href="class.php?classId=<?php echo $classInfoArray['id']?>">
+                                            <a href="class.php?ci=<?php echo $classInfoArray['id']?>">
                                                 <h5><?php echo $classInfoArray['subject']?></h5>
                                             </a>
                                         </div>
@@ -144,16 +142,16 @@
                                     <blockquote class="blockquote mb-0">
                                         <ul class="assignments-list">
                                             <?php 
-                                                $assignments_list = getAssignmentsListOfClass($conn, 1, $classInfoArray['id']);
-                                                // echo $assignments_list->num_rows;
+                                                $assignments_list = getPostsListOfClassByType($conn, 1, $classInfoArray['id']);
                                                 if($assignments_list->num_rows > 0){
                                                     while($assignmentsList = $assignments_list->fetch_assoc()){ 
                                                         if(getPostInfo($conn, $assignmentsList["id"])->num_rows > 0){
                                                             $assignmentInfoArray = getPostInfo($conn, $assignmentsList["id"])->fetch_assoc();
-                                                            // if($assignmentInfoArray['type'] == 1){
+                                                            if(($assignmentInfoArray['limit_time'] == null || $assignmentInfoArray['limit_time'] > $assignmentInfoArray['date_created']) 
+                                                            && checkUserVisibility($conn, $assignmentInfoArray['id'], $_SESSION['userId'])){
                                             ?>
                                             <li>
-                                                <a href="post-detail.php?classId=<?php echo $classInfoArray['id']; ?>&postId=<?php echo $assignmentInfoArray["id"]; ?>">
+                                                <a href="post-detail.php?ci=<?php echo $classInfoArray['id']; ?>&pi=<?php echo $assignmentInfoArray["id"]; ?>">
                                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -161,14 +159,14 @@
                                                     <?php echo $assignmentInfoArray["title"]; ?>
                                                 </a>
                                             </li>
-                                            <?php }}} ?>
+                                            <?php }}}} ?>
                                         </ul>
                                         <footer class="blockquote-footer">
                                             <cite title="Source Title">    
-                                                <small><i>Since 22/02/2001</i></small>
+                                                <small><i>Since <?php echo date('d/m/yy',strtotime($classInfoArray['created_date']))?></i></small>
                                             </cite>
                                             <div class="hagtag-list open-class-btn open-icon">
-                                                <a href="class.php?classId=<?php echo $classInfoArray['id']?>">
+                                                <a href="class.php?ci=<?php echo $classInfoArray['id']?>">
                                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-return-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                         <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
                                                     </svg>
@@ -178,7 +176,7 @@
                                     </blockquote>
                                 </div>
                             </div>     
-                        <?php }} }?>    
+                            <?php }} }?>    
                         </div>
                         <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
                             <div class="card post">
@@ -285,24 +283,45 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="deadline" role="tabpanel" aria-labelledby="deadline-tab">
+                            <ul class="list-group list-group-flush todo-list">
+                                <?php 
+                                    $all_assignments_list = getAllPostsByType($conn, 1);
+                                    if($all_assignments_list->num_rows > 0){
+                                        while($assignmentsList = $all_assignments_list->fetch_assoc()){ 
+                                            if(getPostInfo($conn, $assignmentsList["id"])->num_rows > 0){
+                                                $assignmentInfoArray = getPostInfo($conn, $assignmentsList["id"])->fetch_assoc();
+                                                if(($assignmentInfoArray['limit_time'] == null || $assignmentInfoArray['limit_time'] > $assignmentInfoArray['date_created']) 
+                                                    && checkUserVisibility($conn, $assignmentInfoArray['id'], $_SESSION['userId'])){
+                                ?>
+                                <li class="list-group-item todo-list-item">
+                                    <span>
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-text" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4z"/>
+                                            <path fill-rule="evenodd" d="M4.5 10.5A.5.5 0 0 1 5 10h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+                                        </svg>
+                                        <b>
+                                            <a href="class.php?ci=<?php echo $assignmentInfoArray['class_id'];?>">
+                                            <?php echo getClassInfo($conn,$assignmentInfoArray['class_id'])->fetch_assoc()['subject']; ?>
+                                            </a>
+                                        </b>
+                                        -
+                                        <i>
+                                            <a href="post-detail.php?ci=<?php echo $assignmentInfoArray['class_id'];?>&pi=<?php echo $assignmentInfoArray['id'];?>">
+                                                <?php echo $assignmentInfoArray['title']; ?>
+                                            </a>
+                                        </i>
+                                    </span>
+                                    <small class="limit-time">
+                                    <?php 
+                                    if($assignmentInfoArray['limit_time']!=null)
+                                        echo 'Due to '.$assignmentInfoArray['limit_time']; 
+                                    ?></small>
                                     
+                                </li>
+                                <?php }}}}?>
+                            </ul>
                         </div>
 
-                    </div>
-                    <div class="tab-pagination">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -317,7 +336,7 @@
                             </svg>
                         </div>
                         <div class="statistical-content">
-                            <span>564</span>
+                            <span><?php echo getAllUsers($conn)->num_rows ;?></span>
                         </div>
                         <div class="statistical-object">
                             <span>Number of users</span>
@@ -334,7 +353,7 @@
                             </svg>
                         </div>
                         <div class="statistical-content">
-                            <span>1234</span>
+                            <span><?php echo getAllClasses($conn)->num_rows ;?></span>
                         </div>
                         <div class="statistical-object">
                             <span>Number of classes</span>
@@ -348,7 +367,7 @@
                             </svg>
                         </div>
                         <div class="statistical-content">
-                            <span>23456</span>
+                            <span><?php echo getAllComments($conn)->num_rows ;?></span>
                         </div>
                         <div class="statistical-object">
                             <span>number of conversations</span>
@@ -363,10 +382,10 @@
                             </svg>
                         </div>
                         <div class="statistical-content">
-                            <span>456</span>
+                            <span><?php echo getAllPosts($conn)->num_rows ;?></span>
                         </div>
                         <div class="statistical-object">
-                            <span>happy clients</span>
+                            <span>number of posts</span>
                         </div>
                     </div>
                 </div>

@@ -72,8 +72,16 @@ $('body').on('change', 'input[type=file]', function(){
     $('.fakefile button').text("Total files: "+fi.files.length);
     $('.show-files-detail').css('display', 'block');
 });
-$("#selectAll").click(function(){
+$("#selectAllAss").click(function(){
     $(".assignment-visibility input[type=checkbox]").prop('checked', $(this).prop('checked'));
+
+});
+$("#selectAllMat").click(function(){
+    $(".material-visibility input[type=checkbox]").prop('checked', $(this).prop('checked'));
+
+});
+$("#selectAllAnn").click(function(){
+    $(".announ-visibility input[type=checkbox]").prop('checked', $(this).prop('checked'));
 
 });
 $('button').on('click', function() { 

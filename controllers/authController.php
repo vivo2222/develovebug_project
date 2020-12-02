@@ -96,34 +96,93 @@
             }
         }
     }
+    if(isset($_POST['reset-btn'])){
+        $username = filter_var($_POST["username"], FILTER_SANITIZE_STRING);
+        if(empty($username)){
+            $errors = "Username or email required";
+        }else{
+            $userinfo = getUserInfoLogin($conn, $username);
 
-    /** =====================================CLICK POST FORM BUTTON ACTION=========================================== */
+            if($userinfo->num_rows > 0){
+                $userinfo = $userinfo->fetch_assoc();
+                $_SESSION['reset_time'] = time();
 
-    if (isset($_POST["post-form-btn"])){
-        $target_dir = "uploads/";
-
-        $title = filter_var($_POST["title"], FILTER_SANITIZE_STRING);
-        $limitScore = filter_var($_POST["limit_score"], FILTER_SANITIZE_NUMBER_INT);
-        $details = filter_var($_POST["details"], FILTER_SANITIZE_STRING);
-        $dateCreated = date('yy-m-d');
-        $limitTime = $_POST['limit_time'];
-        if(empty($_POST['limit_time'])){
-            $limitTime = $dateCreated;
-        }
-        $category = 0;
-        $category_tmp = $_POST["category"];
-        if(!empty($category_tmp)){
-            if(gettype($category_tmp) == 'string'){
-                insertTopic($conn, $category_tmp);
-                $category = $conn->insert_id;
+                sendMailReset($userinfo['email']);
+            }else{
+                $errors = "Can't find you";
             }
         }
-        if(empty($title)){
-            $errors = "Title required";
-        }else if(empty($_POST['check_list_visibility'])){
+    }
+    if(isset($_POST['update-pass-btn'])){
+        $password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
+        $re_password = filter_var($_POST["re-password"], FILTER_SANITIZE_STRING);
+        if (empty($password)){
+            $errors = "Password required";
+        }elseif (empty($re_password)){
+            $errors = "Re-password required";
+        }elseif ($password != $re_password){
+            $errors = "Password and re-password are not matched";
+        }else{
+            if(updatePassword($conn, $password, $_GET['m'])){
+                header('Location: login.php');
+            }else{
+                $errors = 'fail';
+            }
+        }
+    }
+    /** =====================================CLICK POST FORM BUTTON ACTION=========================================== */
+    if(isset($_POST['turn-in-btn'])){
+        $target_dir = "uploads/";
+        $target_file = $target_dir . $_FILES["turn-in-files"]["name"];
+        $dateCreated = date('yy-m-d h:i:s');
+        if (!move_uploaded_file($_FILES["turn-in-files"]["tmp_name"], $target_file)) {
+            die("Sorry, there was an error uploading your file.");
+        }else{
+            insertStdFiles($conn, $target_file, $dateCreated, $_SESSION['active_postId'], $_SESSION['userId']);
+        }
+
+    }
+    if (isset($_POST["assignment-form-btn"])){
+        $target_dir = "uploads/";
+        $type = 2;
+        $title = null;
+        if(isset($_POST["title"])){
+            $title = filter_var($_POST["title"], FILTER_SANITIZE_STRING);
+            $type = 3;
+        }
+        $limitScore = null;
+        $details = filter_var($_POST["details"], FILTER_SANITIZE_STRING);
+        $dateCreated = date('yy-m-d h:i:s');
+        $limitTime = null;
+        if(isset($_POST["limit_score"])){
+            if(!empty($_POST['limit_score'])){
+                $limitScore = $_POST["limit_score"];
+                $type = 1;
+            }
+        }
+        if(isset($_POST["limit_time"])){
+            if(!empty($_POST['limit_time'])){
+                $limitTime = date('yy-m-d h:i:s', strtotime($_POST["limit_time"]));
+                $type = 1;
+            }
+        }
+        
+        $category = null;
+        if(isset($_POST["category"])){
+            $category_tmp = $_POST["category"];
+            if(!empty($category_tmp)){
+                if(gettype($category_tmp) == 'string'){
+                    insertTopic($conn, $category_tmp);
+                    $category = $conn->insert_id;
+                }else{
+                    $category = $category_tmp;
+                }
+            }
+        }
+        if(empty($_POST['check_list_visibility'])){
             $errors = "Select students who can see your post please!";
         }else{
-            if(insertPost($conn, $_SESSION['userId'], $title, $details, 1, $category, $limitScore, $dateCreated, $limitTime, 0, 0,$_SESSION['active_classId'])){
+            if(insertPost($conn, $_SESSION['userId'], $title, $details, $type, $category,$limitScore , $dateCreated, $limitTime, 0,$_SESSION['active_classId'])){
                 $postCurrId = $conn->insert_id;
                 $check_list_visibility = $_POST['check_list_visibility'];
                 foreach($_POST['check_list_visibility'] as $selected){
@@ -133,20 +192,37 @@
                 insertPostVisibility( $conn,$postCurrId,1,$_SESSION['active_classId']);
                 
                 $total_count = count($_FILES['files']['name']);
-                // $errors = $total_count;
-                for( $i=0 ; $i < $total_count ; $i++ ) {
-                    $target_file = $target_dir . $_FILES["files"]["name"][$i];
+                if($total_count > 0){
+                    for( $i=0 ; $i < $total_count ; $i++ ) {
+                        $target_file = $target_dir . $_FILES["files"]["name"][$i];
 
-                    if (!move_uploaded_file($_FILES["files"]["tmp_name"][$i], $target_file)) {
-                        die("Sorry, there was an error uploading your file.");
-                    }else{
-                        insertPostLink($conn, $target_file, $postCurrId);
+                        if (!move_uploaded_file($_FILES["files"]["tmp_name"][$i], $target_file)) {
+                            die("Sorry, there was an error uploading your file.");
+                        }else{
+                            insertPostLink($conn, $target_file, $postCurrId);
+                        }
                     }
                 }
             }else{
-                $errors = "Fail";
+                $errors = 'fail';
             }
                 
+        }
+    }
+    if(isset($_POST['post-public-comment-btn'])){
+        $comment = filter_var($_POST['comment-content'], FILTER_SANITIZE_STRING);
+        if(!empty($comment)){
+            if(insertComment($conn, $_SESSION['userId'], $comment, $_SESSION['active_postId'], 1)){
+                updateNumComments($conn, $_SESSION['active_postId'], getPostInfo($conn, $_SESSION['active_postId'])->fetch_assoc()['num_comments']+1);
+            }
+        }
+    }
+    if(isset($_POST['post-private-comment-btn'])){
+        $comment = filter_var($_POST['comment-content'], FILTER_SANITIZE_STRING);
+        if(!empty($comment)){
+            if(insertComment($conn, $_SESSION['userId'], $comment, $_SESSION['active_postId'], 0)){
+                updateNumComments($conn, $_SESSION['active_postId'], getPostInfo($conn, $_SESSION['active_postId'])->fetch_assoc()['num_comments']+1);
+            }
         }
     }
 
@@ -156,7 +232,18 @@
                 removeUserRoleOfClass($conn, $_SESSION['active_classId'], $selected);
             }
         }
-        header("Location: class.php?classId=".$_SESSION['active_classId']);
+        header("Location: class.php?ci=".$_SESSION['active_classId']);
+    }
+    if(isset($_POST["remove-post-btn"])){
+        $postId = $_SESSION["active_postId"];
+        if(deleteVisibility($conn, $postId)&&deleteLink($conn, $postId)){
+            deletePostById($conn, $postId);
+        }
+        header("Location: class.php?ci=".$_SESSION['active_classId']);
+    }
+    if(isset($_POST["edit-post-btn"])){
+        $postId = $_SESSION["active_postId"];
+        header("Location: post-form.php?ci=".$_SESSION['active_classId']."&pi=".$postId);
     }
     if(isset($_POST['add-student-btn'])){
         $invited_email = $_POST["invited-email"];
@@ -182,6 +269,23 @@
             }
         }
     }
+    if(isset($_POST["join-class-btn"])){
+        $code = filter_var($_POST["code"],FILTER_SANITIZE_STRING);
+        if(empty($code)){
+            $errors = "Code required";
+        }else{
+            if(searchClassByCode($conn, $code) != null){
+                $classInfo = searchClassByCode($conn, $code)->fetch_assoc();
+                if(getPeopleOfClassByRole($conn, $classInfo['id'], 2) != null){
+                    $teachers = getPeopleOfClassByRole($conn, $classInfo['id'], 2);
+                    while($teacher = $teachers->fetch_assoc()){
+                        $teacherInfo = getUserInfo($conn, $teacher['user_id'])->fetch_assoc();
+                        sendMailRequire($teacherInfo['email'], $_SESSION['email'], $classInfo['subject'], $classInfo['id'], 'yes',3);
+                    }
+                }
+            }
+        }
+    }
     if(isset($_POST["edit-class-btn"])){
         $subject = filter_var($_POST["subject"],FILTER_SANITIZE_STRING);
         $semester = filter_var($_POST["semester"], FILTER_SANITIZE_STRING);
@@ -197,7 +301,44 @@
             $room = $activeClassInfo['room'];
         }
         if(updateClass($conn, $class_id, $subject, $semester, $room)){
-            header("Location:class.php?classId=".$class_id);
+            header("Location:class.php?ci=".$class_id);
+        }else{
+            die("Can't update");
+        }
+    }
+    if(isset($_POST["edit-post-info-btn"])){
+        $postInfo = getPostInfo($conn, $_GET['pi'])->fetch_assoc();
+        $target_dir = "uploads/";
+        $title = filter_var($_POST["title"], FILTER_SANITIZE_STRING);
+        $limitScore = $_POST['limit_score'];
+        $details = filter_var($_POST["details"], FILTER_SANITIZE_STRING);
+        $limitTime = date('yy-m-d h:i:s', strtotime($_POST["limit_time"]));
+        if(isset($_POST["title"])){
+            $title = filter_var($_POST["title"], FILTER_SANITIZE_STRING);
+        }
+        if(empty($_POST['limit_score'])){
+            $limitScore = $postInfo['limit_score'];
+        }
+        if(empty($_POST['limit_time'])){
+            $limitTime = $postInfo['limit_time'];
+        }
+        if(empty($_POST['details'])){
+            $details = $postInfo['details'];
+        }
+        if(updatePost($conn, $postInfo['id'], $title, $details, $limitScore, $limitTime)){
+            $total_count = count($_FILES['files']['name']);
+            if($total_count > 0){
+                for( $i=0 ; $i < $total_count ; $i++ ) {
+                    $target_file = $target_dir . $_FILES["files"]["name"][$i];
+
+                    if (!move_uploaded_file($_FILES["files"]["tmp_name"][$i], $target_file)) {
+                        die("Sorry, there was an error uploading your file.");
+                    }else{
+                        insertPostLink($conn, $target_file, $postInfo['id']);
+                    }
+                }
+            }
+            header("Location:class.php?ci=".$postInfo['class_id']."&pi=".$postInfo['id']);
         }else{
             die("Can't update");
         }
@@ -207,11 +348,5 @@
         deleteClassUserRole($conn, $classId);
         deleteClass($conn, $classId);
         header("Location:classes.php");
-    }
-    if(isset($_POST["join-class-btn"])){
-        $code = $_POST["classCode"];
-        $classId = getClassIdByCode($conn, $code);
-        $user_id = $_SESSION["userId"];
-        insertStudent($conn, $class_id, $user_id, 3);
     }
 ?>

@@ -12,11 +12,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 row">
-                        <h1 class="col-md-6">Browser Questions</h1>
+                        <h1 class="col-md-6">Browser Posts</h1>
                         <div class="crumbs col-md-6">
                             <a href="home.php">Home</a>
                             <span class="crumbs-span">/</span>
-                            <span class="current">Browser Questions</span>
+                            <span class="current">Browser Posts</span>
                         </div>
                     </div>
                 </div>
