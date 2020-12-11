@@ -138,7 +138,7 @@
         if (!move_uploaded_file($_FILES["turn-in-files"]["tmp_name"], $target_file)) {
             die("Sorry, there was an error uploading your file.");
         }else{
-            insertStdFiles($conn, $target_file, $dateCreated, $_SESSION['active_postId'], $_SESSION['userId']);
+            insertStdFiles($conn, $target_file, $dateCreated, $_SESSION['active_postId'], $_SESSION['userId'], $_SESSION['active_classId']);
         }
 
     }

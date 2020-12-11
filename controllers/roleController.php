@@ -18,6 +18,7 @@
                     $all_people_material = getAllPeopleOfClass($conn, $_SESSION['active_classId']);
                     $all_people_announ = getAllPeopleOfClass($conn, $_SESSION['active_classId']);
                     $topic_list = getAllTopicsOfClass($conn, $_SESSION['active_classId'], 1);
+                    $std_files_list = getStdFilesOfClass($conn, $_SESSION['active_classId']);
                 }
             }else{
                 unset($_GET['ci']);
@@ -26,7 +27,6 @@
         }else{
             if(isset($_SESSION['active_class_roleId'],$_SESSION['active_classId'])){
                 unset($_SESSION['active_classId'],$_SESSION['active_class_roleId']);
-                header('Location: classes.php');
             }
         }
         if(isset($_GET['pi'])){
@@ -52,7 +52,6 @@
         }else{
             if(isset($_SESSION['active_post_role'],$_SESSION['active_postId'])){
                 unset($_SESSION['active_post_role'],$_SESSION['active_postId']);
-                header('Location: classes.php');
 
             }
         }

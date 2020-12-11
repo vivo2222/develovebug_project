@@ -97,7 +97,7 @@
         return $result;
     }
     function getAllClasses($conn){
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM classes";
         $result = $conn->query($sql);
         return $result;
     }
@@ -185,9 +185,9 @@
         $isInserted = $sql->execute();
         return $isInserted;
     }
-    function insertStdFiles($conn, $targetFile, $dateCreated, $postId, $userId){
-        $sql = $conn->prepare("INSERT INTO student_files(path, date_created, post_id, user_id) VALUES (?, ?, ?, ?)");
-        $sql->bind_param('ssii', $targetFile, $dateCreated, $postId, $userId);
+    function insertStdFiles($conn, $targetFile, $dateCreated, $postId, $userId, $classId){
+        $sql = $conn->prepare("INSERT INTO student_files(path, date_created, post_id, user_id, class_id) VALUES (?, ?, ?, ?, ?)");
+        $sql->bind_param('ssiii', $targetFile, $dateCreated, $postId, $userId, $classId);
         $isInserted = $sql->execute();
         return $isInserted;
     }
@@ -200,6 +200,12 @@
     function insertComment($conn, $userId, $content, $postId, $isPublic){
         $sql = $conn->prepare("INSERT INTO comments(user_id, content, post_id, public) VALUES (?,?,?,?)");
         $sql->bind_param('isii', $userId, $content, $postId, $isPublic);
+        $isInserted = $sql->execute();
+        return $isInserted;
+    }
+    function insertScore($conn, $userId, $score, $postId){
+        $sql = $conn->prepare("INSERT INTO assignment_user_score(user_id, score, assignment_id) VALUES (?,?,?)");
+        $sql->bind_param('iii', $userId, $score, $postId);
         $isInserted = $sql->execute();
         return $isInserted;
     }
@@ -357,9 +363,18 @@
         }
         return $result;
     }
-    function getStdFilesOfPost($conn, $post_id){
+    function getStdFilesOfPost($conn, $postId){
         $sql = $conn->prepare("SELECT * FROM student_files WHERE post_id = ?");
-        $sql->bind_param("i", $post_id);
+        $sql->bind_param("i", $postId);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
+    function getStdFilesOfClass($conn, $classId){
+        $sql = $conn->prepare("SELECT * FROM student_files WHERE class_id = ?");
+        $sql->bind_param("i", $classId);
         $result = null;
         if($sql->execute()){
             $result = $sql->get_result();
