@@ -6,7 +6,7 @@
 * [Setup](#setup)
 
 ## General info
-This project is simple online classroom web. Since this is a end-of-term project, we are required to organize the source code and files according to the requirements of the project. 
+This project is a simple online classroom web. Since this is an end-of-term project, we are required to organize the source code and files according to the requirements of the project. 
 Website will have all the basic functions for a class's activities. We will upgrade it to become a Q&A website, so there may be unused redundancies in the database and resources.
 	
 ## Requirements of the project
