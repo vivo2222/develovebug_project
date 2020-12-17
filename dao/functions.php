@@ -454,7 +454,7 @@
         return false;
     }
     function getAllTopicsOfClass($conn, $classId){
-        $sql = $conn->prepare("SELECT * FROM posts WHERE class_id = ?");
+        $sql = $conn->prepare("SELECT DISTINCT topic FROM posts WHERE class_id = ?");
         $sql->bind_param("i", $classId);
         $result = null;
         if($sql->execute()){
