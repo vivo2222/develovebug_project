@@ -170,7 +170,7 @@
         $category = null;
         if(isset($_POST["category"])){
             $category_tmp = $_POST["category"];
-            if(!empty($category_tmp)){
+            if(!empty($category_tmp) && $type == 1){
                 if(gettype($category_tmp) == 'string'){
                     insertTopic($conn, $category_tmp);
                     $category = $conn->insert_id;
