@@ -270,7 +270,7 @@
                     </div>
                     <div class="col-md-4 sidebar">
                         <?php
-                        if($activePostInfo['type']==1){
+                        if($activePostInfo['type']==1 && $_SESSION['active_class_roleId'] == 3){
                         ?>
                         <div id="questions-widget-2" class="widget questions-widget">
                             <h3 class="widget_title">Your work</h3>
