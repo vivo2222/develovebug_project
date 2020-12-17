@@ -33,7 +33,7 @@ if(isset($_GET['ci'], $_GET['iv'], $_GET['im'], $_GET['r'])){
     if($userinfo->num_rows > 0){
         $userinfo = $userinfo->fetch_assoc();
         if(setUserRole($conn, $_GET['ci'], $userinfo['id'], $_GET['r'])){
-            header("Location: home.php");
+            header("Location: logout.php");
         }else{
             echo setUserRole($conn, $_GET['ci'], $userinfo['id'], $_GET['r']);
         }
