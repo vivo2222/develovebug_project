@@ -211,7 +211,7 @@
                                                                     if(getTopicInfo($conn, $topicsList["topic"])->num_rows > 0){
                                                                         $topicInfoArray = getTopicInfo($conn, $topicsList["topic"])->fetch_assoc();
                                                             ?>
-                                                            <option value="<?php echo $topicInfoArray["id"]?>" class="level-0"><?php echo $topicInfoArray["name"]?></option>
+                                                            <option value="<?php echo $topicInfoArray["name"]?>" class="level-0"><?php echo $topicInfoArray["name"]?></option>
                                                             <?php }}} ?>
                                                         </select>
                                                     </span>
@@ -509,44 +509,44 @@
                         <div id="questions-widget-2" class="widget questions-widget">
                             <h3 class="widget_title">To-do list</h3>
                             <ul class="related-posts">
-                                <li class="related-item">
+                                <?php 
+                                    $assignments_list = getPostsListOfClassByType($conn, 1, $activeClassInfo['id']);
+                                    if($assignments_list->num_rows > 0){
+                                        while($assignmentsList = $assignments_list->fetch_assoc()){ 
+                                            if(getPostInfo($conn, $assignmentsList["id"])->num_rows > 0){
+                                                $assignmentInfoArray = getPostInfo($conn, $assignmentsList["id"])->fetch_assoc();
+                                                if(($assignmentInfoArray['limit_time'] == null || $assignmentInfoArray['limit_time'] > $assignmentInfoArray['date_created']) 
+                                                && checkUserVisibility($conn, $assignmentInfoArray['id'], $_SESSION['userId'])){
+                                ?>
+                                <li class="related-item todo-list-item">
                                     <div class="questions-div">
                                         <h3>
-                                            <a href="#">
-                                                <i class="far fa-file-alt"></i>
-                                                Bài tập lớn
+                                            <a href="post-detail.php?ci=<?php echo $_SESSION['active_classId'];?>&pi=<?php echo $assignmentInfoArray['id'];?>">
+                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-journal-text" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                                                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                                                    <path fill-rule="evenodd" d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                                                </svg>
+                                                <?php echo $assignmentInfoArray['title'];?>
                                             </a>
                                         </h3>
                                     </div>
                                 </li>
-                                <li class="related-item">
-                                    <div class="questions-div">
-                                        <h3>
-                                            <a href="#">
-                                                <i class="far fa-file-alt"></i>
-                                                Bài tập lớn
-                                            </a>
-                                        </h3>
-                                    </div>
-                                </li>
-                                <li class="related-item">
-                                    <div class="questions-div">
-                                        <h3>
-                                            <a href="#">
-                                                <i class="far fa-file-alt"></i>
-                                                Bài tập lớn
-                                            </a>
-                                        </h3>
-                                    </div>
-                                </li>
+                                <?php }}}}?>
                             </ul>
                         </div>
                         <div id="tag_cloud-2" class="widget widget_tag_cloud">
                             <h3 class="widget_title">Tag Cloud</h3>
                             <div class="tagcloud">
-                                <a href="#" class="tag-cloud-link tag-link-5 tag-link-position-1">html</a>
-                                <a href="#" class="tag-cloud-link tag-link-5 tag-link-position-1">css</a>
-                                <a href="#" class="tag-cloud-link tag-link-5 tag-link-position-1">php</a>
+                                <?php 
+                                $topics_list = getAllTopicsOfClass($conn, $activeClassInfo['id']);
+                                if($topics_list->num_rows > 0){
+                                    while($topicsList = $topics_list->fetch_assoc()){ 
+                                        if(getTopicInfo($conn, $topicsList["topic"])->num_rows > 0){
+                                            $topicInfoArray = getTopicInfo($conn, $topicsList["topic"])->fetch_assoc();
+                                ?>
+                                <a href="#" class="tag-cloud-link tag-link-5 tag-link-position-1"><?php echo $topicInfoArray['name'];?></a>
+                                <?php }}}?>
                             </div>
                         </div>
                     </div>
