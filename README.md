@@ -6,7 +6,7 @@
 * [Setup](#setup)
 
 ## General info
-This project is simple online classroom web. Since this is a end-of-term project, we are required to organize the source code and files according to the requirements of the project. 
+This project is a simple online classroom web. Since this is an end-of-term project, we are required to organize the source code and files according to the requirements of the project. 
 Website will have all the basic functions for a class's activities. We will upgrade it to become a Q&A website, so there may be unused redundancies in the database and resources.
 	
 ## Requirements of the project
@@ -18,9 +18,6 @@ Website will have all the basic functions for a class's activities. We will upgr
 * All the source code related to CSS that you write by yourself, you put in a single file called style.css, located in the root directory of the project. Absolutely not write css in html / php files (inline css and internal css). 
 * All the code related to Javascript / jQuery that you write by yourself, you put in a single file named main.js, located in the root directory of the project. Absolutely not write Javascript / jQuery in html / php files. 
 * The only back-end language used in the project is PHP.
-* Students have to do your own project, not copy. Lecturers will check plagiarism with specialized software before marking, all forms of plagiarism will be 0 points and report to the school for handling according to regulations. 
-* Students do not need to write reports. After submitting the papers, students will be asked to present their topic and answer questions with the marking teacher. When demoing, students need to prepare data including many Teachers, many Students, many Classes, etc. 
-* If there are unknown problems, students directly discuss with the lecturer of the theory to be solved. answer.
 ### III. Request
 #### 3.1 Requirement 1: register, login, forget password
 The system has three roles as follows:
