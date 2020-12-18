@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 02, 2020 lúc 05:36 PM
+-- Thời gian đã tạo: Th12 18, 2020 lúc 06:58 AM
 -- Phiên bản máy phục vụ: 10.4.13-MariaDB
 -- Phiên bản PHP: 7.4.7
 
@@ -171,7 +171,8 @@ CREATE TABLE `student_files` (
   `path` varchar(255) NOT NULL,
   `date_created` datetime NOT NULL,
   `post_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -209,7 +210,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `fullname`, `birth`, `tel`, `token`, `verified`, `avatar`) VALUES
-(1, 'admin', '$2y$10$ucR2cxo.9CYwjRlCbGPVt.LBiVMUcnxTaAZ5Ix91n/LraxZBOY.42', 'votuongvi2222002@gmail.com', 'Võ Tường Vi', '2001-02-22', '0917004354', 'b4aac8d6af01d41e128491e55fad93e4ee31c230433d1e506ae41af3915170e5e238833efe834b0fb6e82e74b1d258df0735', 1, 'img/avatar.png');
+(1, 'admin', '$2y$10$ucR2cxo.9CYwjRlCbGPVt.LBiVMUcnxTaAZ5Ix91n/LraxZBOY.42', 'votuongvi2222002@gmail.com', 'Võ Tường Vi', '2001-02-22', '0917004354', 'b4aac8d6af01d41e128491e55fad93e4ee31c230433d1e506ae41af3915170e5e238833efe834b0fb6e82e74b1d258df0735', 1, 'img/avatar.png'),
+(53, 'vivo22', '$2y$10$HKS.IRSwT8c5dlh.iqt39.QVKKlYoo9erqwakWFr3Yo/0Ub1l4iJ.', 'tuongvivo222@gmail.com', 'Võ Tường Vi', '2020-12-11', '0947355907', 'c4e01ce16f89e6b079cfb1fb5d75f1e8d62c9dd87243d6c8741c72678ef4e0650ce7ecb4c1088ae984a93ddede3905d2aeda', 1, 'img/avatar.png'),
+(54, 'student1', '$2y$10$MRGO/bkdE2FK4KL60NhMCeIr/LLt3r4uiPrCyIqw0WxeZk0wP8A06', 'studentdevelovebug1@gmail.com', 'Student One', '2009-02-26', '01234744615', 'cb878372c1a4d1510edd810f7cb822ebc170fe2f6cebc8ff16409435977c1513bb62e8fe877a0ae9ccbd7562510c59fc0e12', 1, 'img/avatar.png'),
+(55, 'student2', '$2y$10$r9.CkS1Z6Bdv4xqlSq23oezc/s6svJaT/PKqp4uFWT41lbdocozVS', 'studentdevelovebug2@gmail.com', 'Student Two', '2004-06-16', '0947355907', 'eb2ce1f05f4cc6fcbc8dc5d1fe481bbd3071f07784687fd30821c7b225551ec776666eaf826435b22293d1bd4d360a4ef6e2', 1, 'img/avatar.png'),
+(56, 'student3', '$2y$10$ju3Kz3ic/EOE0bWbt1lWx.mN.7rKXlzpx3IyMJ9PMsplvPEw5fG2e', 'studentdevelovebug3@gmail.com', 'Student Three', '2013-01-30', '01234744615', 'fa734b62ad3d33ea820111de310017a190656f039c162a8431de779d83576f5385f693aff09fd47ba5eb9963060de5e6f2ce', 1, 'img/avatar.png'),
+(57, 'student4', '$2y$10$bU8BE.b4MHidsbYEYHDL7e7Xq8wmzwoadxOr54YuF8ZQ5uH/arsXa', 'studentdevelovebug4@gmail.com', 'Student Four', '2000-02-22', '0947355907', 'e826c809aefffea7d0d4c6b8a75e4b1b8019934e9dcd33219c73ad5df5a988325fcf2b5b26bfa62c8f29696596df8354ae86', 1, 'img/avatar.png'),
+(58, 'student5', '$2y$10$JGyOxt12EUFen97BVaZ7mOvZWwmM.MRaMg3f8GDYXpOSHLZ/JzjJ2', 'studentdevelovebug5@gmail.com', 'Student Five', '2002-06-05', '0947355907', '892c6b9e90ed82bdf476236a39df88d1d58a054b57176d5951273ecb6deab9f48b978f02834e6585e1631f4cd92f7137c2ea', 1, 'img/avatar.png');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -219,6 +226,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `fullname`, `birth`,
 -- Chỉ mục cho bảng `assignment_user_score`
 --
 ALTER TABLE `assignment_user_score`
+  ADD UNIQUE KEY `assignment_id` (`assignment_id`,`user_id`),
   ADD KEY `score_fk0` (`assignment_id`),
   ADD KEY `score_fk1` (`user_id`);
 
@@ -289,7 +297,8 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `student_files`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `std_file_fk0` (`user_id`);
+  ADD KEY `std_file_fk0` (`user_id`),
+  ADD KEY `std_file_fk1` (`class_id`);
 
 --
 -- Chỉ mục cho bảng `topics`
@@ -365,7 +374,7 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -418,7 +427,8 @@ ALTER TABLE `post_visibility`
 -- Các ràng buộc cho bảng `student_files`
 --
 ALTER TABLE `student_files`
-  ADD CONSTRAINT `std_file_fk0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `std_file_fk0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `std_file_fk1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
