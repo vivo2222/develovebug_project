@@ -5,7 +5,7 @@
             <div class="col-lg-4 col-md-4 col-sm-6 hidden-xs">
                 <ul class="nav top-nav nav-left" id="menu-left-top-bar">
                     <li class="nav-item"><a class="nav-link" href="home.php">HOME</a></li>
-                    <li class="nav-item"><a class="nav-link" href="home.php">CALENDAR</a></li>
+                    <li class="nav-item"><a class="nav-link" href="calendar.php">CALENDAR</a></li>
                 </ul>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">

@@ -14,7 +14,7 @@
                     <div class="col-md-12 row">
                         <h1 class="col-md-6">How It Works</h1>
                         <div class="crumbs col-md-6">
-                            <a href="index.html">Home</a>
+                            <a href="home.php">Home</a>
                             <span class="crumbs-span">/</span>
                             <span class="current">How It Works</span>
                         </div>

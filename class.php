@@ -237,6 +237,7 @@
                                                 while($topic = $topic_list->fetch_assoc()){
                                                     if($topic['topic']!=null){
                                                         $topic_info = getTopicInfo($conn, $topic['topic'])->fetch_assoc();
+                            
                                             ?>
                                             <button class="btn btn-link btn-block text-left topic-label" type="button" data-toggle="collapse" data-target="#coll<?php echo $topic_info['id'];?>" aria-expanded="true" aria-controls="coll<?php echo $topic_info['id'];?>">
                                                 <?php echo $topic_info['name'];?>
@@ -385,33 +386,48 @@
                                     
                             </div>
                             <div class="tab-pane fade" id="deadline" role="tabpanel" aria-labelledby="deadline-tab">  
-                                <?php
-                                if($std_files_list->num_rows > 0){
-                                    while($stdFilesOfClass = $std_files_list->fetch_assoc()){
-                                        getPostInfo($stdFilesOfClass['post_id'])-fetch_assoc();
-                                        $stdFilesOfPost = getStdFilesOfPost($conn, $stdFilesOfClass['post_id'])->fetch_assoc();
-                                ?> 
-                                <table class="table table-hover">
-                                    <caption>List of users</caption>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Index</th>
-                                            <th scope="col">Full Name</th>
-                                            <th scope="col">Files upload</th>
-                                            <th scope="col">Date turn in</th>
-                                            <th scope="col">Score</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td><?php echo $stdFile[''];?></td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <?php }}?>                   
+                                <?php 
+                                    $assignments_list = getPostsListOfClassByType($conn, 1, $activeClassInfo['id']);
+                                    if($assignments_list->num_rows > 0){
+                                        while($assignmentsList = $assignments_list->fetch_assoc()){ 
+                                            if(getPostInfo($conn, $assignmentsList["id"])->num_rows > 0){
+                                                $assignmentInfoArray = getPostInfo($conn, $assignmentsList["id"])->fetch_assoc();
+                                                if(($assignmentInfoArray['limit_time'] == null || $assignmentInfoArray['limit_time'] > $assignmentInfoArray['date_created']) 
+                                                && checkUserVisibility($conn, $assignmentInfoArray['id'], $_SESSION['userId'])){
+                                ?>
+                                <h6><i><?php echo $assignmentInfoArray['title'];?></i></h6>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="table-active" scope="col">Index</th>
+                                                <th class="table-active" scope="col">Full Name</th>
+                                                <th class="table-active" scope="col">Files upload</th>
+                                                <th class="table-active" scope="col">Date turn in</th>
+                                                <th class="table-active" scope="col">Score</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                                $stdFilesOfPost = getStdFilesOfPost($conn, $assignmentInfoArray['id']);
+                                                $numTurnIn = 0;
+                                                if($stdFilesOfPost->num_rows > 0){
+                                                    while($fileInfo = $stdFilesOfPost->fetch_assoc()){
+                                                        $numTurnIn++;
+                                            ?>
+                                            <tr>
+                                                <th scope="row"><?php echo $numTurnIn; ?></th>
+                                                <td><?php echo getUserInfo($conn, $fileInfo['user_id'])->fetch_assoc()['fullname'];?></td>
+                                                <td><?php echo "<a href='verify.php?pf=".$fileInfo['path']."'>".$fileInfo['path']."</a><br> ";?></td>
+                                                <td><?php echo $fileInfo['date_created'];?></td>
+                                                <td>80/100</td>
+                                            </tr>
+                                            <?php }} ?>
+                                        </tbody>
+                                        <caption><?php echo 'Number of turn-in: '.$numTurnIn; ?></caption>
+                                    </table>
+                                </div>
+                                <?php }}}}?>                   
                             </div>
 
                         </div> 
