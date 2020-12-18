@@ -62,4 +62,15 @@ if(isset($_GET['m'])){
     else
         echo time()-$_SESSION['reset_time'];
 }
+
+if(isset($_POST['add-score-btn'], $_GET['si'], $_GET['pi'], $_GET['ci'])){
+    $score = $_POST["score"];
+    $stdId = $_GET['si'];
+    $postId = $_GET['pi'];
+    $classId = $_GET['ci'];
+    if(!insertScore($conn, $stdId, $score, $postId)){
+        updateScore($conn, $stdId, $score, $postId);
+    }
+    header("Location: class.php?ci=$classId");
+}
 ?>

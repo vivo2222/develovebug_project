@@ -209,6 +209,21 @@
         $isInserted = $sql->execute();
         return $isInserted;
     }
+    function updateScore($conn, $userId, $score, $postId){
+        $sql = $conn->prepare("UPDATE assignment_user_score SET score = ? WHERE user_id = ? AND assignment_id = ?");
+        $sql->bind_param('iii', $score, $userId, $postId);
+        $isUpdated = $sql->execute();
+        return $isUpdated;
+    }
+    function getUserScoreOfAssignment($conn, $userId, $postId){
+        $sql = $conn->prepare("SELECT * FROM assignment_user_score WHERE user_id = ? AND assignment_id = ?");
+        $sql->bind_param("ii", $userId, $postId);
+        $result = null;
+        if($sql->execute()){
+            $result = $sql->get_result();
+        }
+        return $result;
+    }
     function randCode( $length ) {  
         $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";  
         $size = strlen( $chars );

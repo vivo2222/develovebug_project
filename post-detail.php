@@ -158,7 +158,14 @@
                                                         <?php } ?>
                                                         <?php if($activePostInfo['limit_score'] != null){?>
                                                         <span>
-                                                            <?php echo $activePostInfo['limit_score']; ?> points
+                                                            <?php 
+                                                                $score = getUserScoreOfAssignment($conn, $_SESSION['userId'], $activePostInfo['id']);
+                                                                if($score->num_rows > 0){
+                                                                    echo $score->fetch_assoc()['score']."/".$activePostInfo['limit_score']." points";
+                                                                }else{
+                                                                    echo '/'.$activePostInfo['limit_score']." points";
+                                                                }
+                                                            ?>
                                                         </span>
                                                         <?php } ?>
                                                     </footer>

@@ -420,7 +420,20 @@
                                                 <td><?php echo getUserInfo($conn, $fileInfo['user_id'])->fetch_assoc()['fullname'];?></td>
                                                 <td><?php echo "<a href='verify.php?pf=".$fileInfo['path']."'>".$fileInfo['path']."</a><br> ";?></td>
                                                 <td><?php echo $fileInfo['date_created'];?></td>
-                                                <td>80/100</td>
+                                                <td>
+                                                    <form action="verify.php?si=<?php echo $fileInfo['user_id'];?>&pi=<?php echo $fileInfo['post_id'];?>&ci=<?php echo $fileInfo['class_id'];?>" method="Post">
+                                                        <input class="score-input" id="score" name="score" type="number" min="0" max=<?php echo $assignmentInfoArray['limit_score'];?> value=
+                                                        <?php 
+                                                            $score = getUserScoreOfAssignment($conn, $fileInfo['user_id'], $fileInfo['post_id']);
+                                                            if($score->num_rows > 0){
+                                                                echo $score->fetch_assoc()['score'];
+                                                            }else{
+                                                                echo '/';
+                                                            }
+                                                        ?>>
+                                                        <input type="submit" name="add-score-btn" value="Save">
+                                                    </form>
+                                                </td>
                                             </tr>
                                             <?php }} ?>
                                         </tbody>
