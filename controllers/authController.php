@@ -199,7 +199,7 @@
                         if (!move_uploaded_file($_FILES["files"]["tmp_name"][$i], $target_file)) {
                             die("Sorry, there was an error uploading your file.");
                         }else{
-                            insertPostLink($conn, $target_file, $postCurrId);
+                            insertPostLink($conn, $_FILES["files"]["name"][$i], $postCurrId);
                         }
                     }
                 }
