@@ -395,7 +395,9 @@
                                                 if(($assignmentInfoArray['limit_time'] == null || $assignmentInfoArray['limit_time'] > $assignmentInfoArray['date_created']) 
                                                 && checkUserVisibility($conn, $assignmentInfoArray['id'], $_SESSION['userId'])){
                                 ?>
-                                <h6><i><?php echo $assignmentInfoArray['title'];?></i></h6>
+                                <h6>
+                                    <i><a href="post-detail.php?ci=<?php echo $assignmentInfoArray['class_id'];?>&pi=<?php echo $assignmentInfoArray['id'];?>"><?php echo $assignmentInfoArray['title'];?></a></i>
+                                </h6>
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
