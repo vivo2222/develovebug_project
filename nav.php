@@ -64,7 +64,7 @@
                         <a href="howitworks.php">How it works?</a>
                     </li>
                     <li>
-                        <a href="#">Assignments</a>
+                        <a href="classes.php">Classes</a>
                     </li>
                     <li>
                         <a href="calendar.php">Calendar</a>
