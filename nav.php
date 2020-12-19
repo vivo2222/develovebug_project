@@ -66,6 +66,9 @@
                     <li>
                         <a href="#">Assignments</a>
                     </li>
+                    <li>
+                        <a href="calendar.php">Calendar</a>
+                    </li>
                     <li class="menu-item-pq">
                         <a href="post-form.php?ci=<?php echo $activeClassInfo['id']?>">Add post / Share</a>
                     </li>

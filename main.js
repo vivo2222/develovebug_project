@@ -1,6 +1,6 @@
-// $('.infocenter_mobile_click').on('click', function () {
-//     $('.navigation_mobile ul').toggle();
-// });
+$('.infocenter_mobile_click').on('click', function () {
+    $('.navigation_mobile ul').toggle();
+});
 var Calendar = function(t) {
     this.divId = t.RenderID ? t.RenderID : '[data-render="calendar"]', this.DaysOfWeek = t.DaysOfWeek ? t.DaysOfWeek : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], this.Months = t.Months ? t.Months : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var e = new Date;
