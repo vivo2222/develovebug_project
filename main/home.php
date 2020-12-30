@@ -3,7 +3,7 @@
     if(!isset($_SESSION['username'])){
         header('Location: login.php');
     }
-	require "controllers/roleController.php";
+	require "../controllers/roleController.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -208,7 +208,7 @@
                                         </div>
                                     </div>
                                     <div class="user-info-box">
-                                        <img src="img/avatar.png" alt="avatar" class="avatar">
+                                        <img src="../assets/img/avatar.png" alt="avatar" class="avatar">
                                     </div>
                                     
                                 </div>
@@ -256,7 +256,7 @@
                                         </div>
                                     </div>
                                     <div class="user-info-box">
-                                        <img src="img/avatar.png" alt="avatar" class="avatar">
+                                        <img src="../assets/img/avatar.png" alt="avatar" class="avatar">
                                     </div>
                                     
                                 </div>
@@ -397,4 +397,4 @@
 </body>
 
 </html>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="../assets/js/main.js"></script>

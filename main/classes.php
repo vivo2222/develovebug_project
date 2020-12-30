@@ -3,7 +3,7 @@
     if(!isset($_SESSION['username'])){
         header('Location: login.php');
     }
-	require "controllers/roleController.php";
+	require "../controllers/roleController.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -238,4 +238,4 @@
 </body>
 
 </html>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="../assets/js/main.js"></script>

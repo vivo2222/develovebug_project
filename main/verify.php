@@ -1,6 +1,6 @@
 <?php
 session_start();
-require ("dao/config.php");
+require ("../dao/config.php");
 if(isset($_GET["token"])){
     global $conn;
     $token = $_GET["token"];

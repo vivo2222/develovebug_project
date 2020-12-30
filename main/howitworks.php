@@ -26,15 +26,15 @@
             <div class="container">
                 <div class="row">
                     <div class="ins-step col-md-4">
-                        <img src="img/step1.png" alt="step1">
+                        <img src="../assets/img/step1.png" alt="step1">
                         <div>1. Create An Account</div>
                     </div>
                     <div class="ins-step col-md-4">
-                        <img src="img/step2.png" alt="step2">
+                        <img src="../assets/img/step2.png" alt="step2">
                         <div>2. Post Your Question</div>
                     </div>
                     <div class="ins-step col-md-4">
-                        <img src="img/step3.png" alt="step3">
+                        <img src="../assets/img/step3.png" alt="step3">
                         <div>3. Find Your Solution</div>
                     </div>
                 </div>
@@ -46,4 +46,4 @@
 </body>
 
 </html>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="../assets/js/main.js"></script>

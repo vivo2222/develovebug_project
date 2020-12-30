@@ -37,7 +37,7 @@
         <div class="row">
             <div class="logo col-md-4">
                 <a href="home.php" class="logo-img">
-                    <img src="img/logo.png" alt="" class="logo-default lazyloaded">
+                    <img src="../assets/img/logo.png" alt="" class="logo-default lazyloaded">
                 </a>
             </div>
             <nav class="navigation col-md-8 hidden-xs">

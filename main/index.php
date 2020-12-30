@@ -4,7 +4,7 @@
         header("location: home.php");
         exit();
     }
-    require "controllers/authController.php";
+    require "../controllers/authController.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -12,7 +12,7 @@
     require_once "head-tag.php";
 ?>
 <body class="form-page ">
-    <img src="img/main-bg.jpg" alt="tdt_background">
+    <img src="../assets/img/main-bg.jpg" alt="tdt_background">
     <div class="container-fluid">
         <div class="row">
             <?php if(!isset($_SESSION["verified"])){ ?>
@@ -84,4 +84,4 @@
     </div>
 </body>
 </html>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="../assets/js/main.js"></script>

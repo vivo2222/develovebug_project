@@ -5,7 +5,7 @@
     }
     if(!isset($_SESSION['active_classId']))
         header("Location: home.php");
-    require "controllers/roleController.php";
+    require "../controllers/roleController.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -251,7 +251,7 @@
                                                                     <li class="list-group-item" aria-disabled="true">
                                                                         <input class="to-check" type="checkbox" id="selectAllAss">
                                                                         <label for="selectAllAss">
-                                                                            <img class="avatar" src="img/avatar.png" alt="avatar">
+                                                                            <img class="avatar" src="../assets/img/avatar.png" alt="avatar">
                                                                             All students
                                                                         </label>
                                                                     </li>
@@ -266,7 +266,7 @@
                                                                     <li class="list-group-item">
                                                                         <input class="to-check" name="check_list_visibility[]" type="checkbox" id=<?php echo $studentInfoArray['id']?> value=<?php echo $studentInfoArray['id']?>>
                                                                         <label for=<?php echo $studentInfoArray['id']?>>
-                                                                            <img class="avatar" src="img/avatar.png" alt="avatar">
+                                                                            <img class="avatar" src="../assets/img/avatar.png" alt="avatar">
                                                                             <?php echo $studentInfoArray['fullname']?>
                                                                         </label>
                                                                     </li>
@@ -391,7 +391,7 @@
                                                                     <li class="list-group-item" aria-disabled="true">
                                                                         <input class="to-check" type="checkbox" id="selectAllAnn">
                                                                         <label for="selectAllAnn">
-                                                                            <img class="avatar" src="img/avatar.png" alt="avatar">
+                                                                            <img class="avatar" src="../assets/img/avatar.png" alt="avatar">
                                                                             All people
                                                                         </label>
                                                                     </li>
@@ -406,7 +406,7 @@
                                                                     <li class="list-group-item">
                                                                         <input class="to-check" name="check_list_visibility[]" type="checkbox" id=<?php echo $peopleInfoArray['id']?> value=<?php echo $peopleInfoArray['id']?>>
                                                                         <label for=<?php echo $peopleInfoArray['id']?>>
-                                                                            <img class="avatar" src="img/avatar.png" alt="avatar">
+                                                                            <img class="avatar" src="../assets/img/avatar.png" alt="avatar">
                                                                             <?php echo $peopleInfoArray['fullname']?>
                                                                         </label>
                                                                     </li>

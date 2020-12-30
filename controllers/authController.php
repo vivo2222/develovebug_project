@@ -1,5 +1,5 @@
 <?php
-    require ('dao/config.php');
+    require ('../dao/config.php');
     global $conn;
     $username = "";
     $password = "";

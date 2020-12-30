@@ -162,7 +162,7 @@ header.title a,
     background-color: inherit!important;
 }
 .background-cover {
-  background-image: url("img/main-bg.jpg");
+  background-image: url("../img/main-bg.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

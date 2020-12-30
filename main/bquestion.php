@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                                 <div class="user-info-box">
-                                    <img src="img/avatar.png" alt="avatar" class="avatar">
+                                    <img src="../assets/img/avatar.png" alt="avatar" class="avatar">
                                 </div>
                                 
                             </div>
@@ -98,4 +98,4 @@
 </body>
 
 </html>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="../assets/js/main.js"></script>

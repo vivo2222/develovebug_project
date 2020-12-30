@@ -3,7 +3,7 @@
     if(!isset($_SESSION['username'])){
         header('Location: login.php');
     }
-    require "controllers/roleController.php";
+    require "../controllers/roleController.php";
     if(!isset($_SESSION['active_post_role'],$_SESSION['active_postId'])){
         header('Location: classes.php');
     }
@@ -144,7 +144,7 @@
                                     <div class="card post-box-card">
                                         <div class="card-header post-box-header row">
                                             <div class="card-header-left col-md-6">
-                                                <img src="img/avatar.png" alt="avatar" class="avatar">
+                                                <img src="../assets/img/avatar.png" alt="avatar" class="avatar">
                                                 <div class="post-detail">
                                                     <footer class="blockquote-footer">
                                                         <small class="text-muted">
@@ -228,7 +228,7 @@
                                         ?>
                                         <li class="list-group-item list-comment">
                                             <div class="card-header post-box-header comment-list-item-header">
-                                                <img src="img/avatar.png" alt="avatar" class="avatar">
+                                                <img src="../assets/img/avatar.png" alt="avatar" class="avatar">
                                                 <div class="post-detail">
                                                     <footer class="blockquote-footer">
                                                         <small class="text-muted">
@@ -246,7 +246,7 @@
                                         ?>
                                         <li class="list-group-item list-comment">
                                             <div class="card-header post-box-header comment-list-item-header">
-                                                <img src="img/avatar.png" alt="avatar" class="avatar">
+                                                <img src="../assets/img/avatar.png" alt="avatar" class="avatar">
                                                 <div class="post-detail">
                                                     <footer class="blockquote-footer">
                                                         <small class="text-muted">
@@ -263,7 +263,7 @@
                                 </div>
                                 <form action="" method="post">
                                     <div class="comment-box comment-box-active">
-                                        <img src="img/avatar.png" alt="avatar" class="avatar hidden-xs">
+                                        <img src="../assets/img/avatar.png" alt="avatar" class="avatar hidden-xs">
                                         <textarea class="comment-input col-9" name="comment-content" placeholder="Comment here..." cols="1" rows="1" required></textarea>
                                         <button name="post-public-comment-btn" class="post-comment-btn col-1" type='submit'>
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -325,4 +325,4 @@
 </body>
 
 </html>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="../assets/js/main.js"></script>

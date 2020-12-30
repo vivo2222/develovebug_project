@@ -3,7 +3,7 @@
     if(!isset($_SESSION['username'])){
         header('Location: login.php');
     }
-    require "controllers/roleController.php";
+    require "../controllers/roleController.php";
     if(!isset($_SESSION['active_class_roleId'])){
         header('Location: classes.php');
     }
@@ -325,7 +325,7 @@
                                                 
                                         ?>
                                             <li class="list-group-item">
-                                                <img class="avatar" src="img/avatar.png" alt="avatar">
+                                                <img class="avatar" src="../assets/img/avatar.png" alt="avatar">
                                                 <?php echo $teacherInfoArray['fullname']?>
                                             </li>
                                         <?php }}} ?>
@@ -356,7 +356,7 @@
                                                     <li class="list-group-item">
                                                         <input class="to-check" name="check_list[]" type="checkbox" id=<?php echo $studentInfoArray['id']?> value=<?php echo $studentInfoArray['id']?>>
                                                         <label for=<?php echo $studentInfoArray['id']?>>
-                                                            <img class="avatar" src="img/avatar.png" alt="avatar">
+                                                            <img class="avatar" src="../assets/img/avatar.png" alt="avatar">
                                                             <?php echo $studentInfoArray['fullname']?>
                                                         </label>
                                                     </li>
@@ -374,7 +374,7 @@
                                                     
                                             ?>
                                                 <li class="list-group-item">
-                                                    <img class="avatar" src="img/avatar.png" alt="avatar">
+                                                    <img class="avatar" src="../assets/img/avatar.png" alt="avatar">
                                                     <?php echo $studentInfoArray['fullname']?>
                                                 </li>
                                             <?php }}} ?>
@@ -500,4 +500,4 @@
 </body>
 
 </html>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="../assets/js/main.js"></script>
