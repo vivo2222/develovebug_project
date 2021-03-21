@@ -19,5 +19,5 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-    <title>Develovebug Classroom</title>
+    <title>Develovebug</title>
 </head>
