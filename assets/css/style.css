@@ -524,6 +524,7 @@ textarea {
 
 .title-box {
   float: left;
+  width: 70%;
 }
 .user-info-box {
   float: right;

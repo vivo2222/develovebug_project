@@ -122,7 +122,7 @@
                                     $classInfoArray = getClassInfo($conn, $list["class_id"])->fetch_assoc();
                                 
                         ?>
-                            <div class="card     post class-box">
+                            <div class="card post class-box">
                                 <div class="card-header">
                                     <div class="title-box">
                                         <div class="title">
