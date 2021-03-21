@@ -649,7 +649,7 @@ textarea {
   text-align: left;
 }
 .copyright {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.151);
   color: gray;
   font-size: 15px;
   padding: 16px 0;
@@ -658,10 +658,7 @@ textarea {
 .copyright-pannel,
 .copyright-author {
   display: inline-block;
-  padding: 0 5px;
-}
-.copyright .copyright-pannel {
-  border-right: 1px solid rgba(255, 255, 255, 0.582);
+  /* padding: 0 5px; */
 }
 .breadcrumbs {
   background: rgb(235, 232, 232);

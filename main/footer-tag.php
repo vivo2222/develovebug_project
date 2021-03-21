@@ -40,9 +40,9 @@
         </ul>
     </div>
     <div class="copyright">
-        <div class="copyright-pannel">Copyright 2020</div>
+        <div class="copyright-pannel">Copyright 2020 by </div>
         <div class="copyright-author"> 
-            <img src="../assets/img/team-icon.png" alt="team-icon">DeveLOVEbug 
+            DeveLOVEbug <img src="../assets/img/team-icon.png" alt="team-icon"> 
         </div>
     </div>
 </footer>
