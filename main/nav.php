@@ -49,9 +49,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="classes.php">Classes</a>
                         </li>
+                        <?php if(isset($_SESSION['active_class_roleId'])){ ?>
                         <li class="nav-item menu-item-pq">
                             <a class="nav-link" href="post-form.php?ci=<?php echo $activeClassInfo['id']?>">Add Post / Share</a>
                         </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </nav>
@@ -69,9 +71,11 @@
                     <li>
                         <a href="calendar.php">Calendar</a>
                     </li>
+                    <?php if(isset($_SESSION['active_class_roleId'])){ ?>
                     <li class="menu-item-pq">
                         <a href="post-form.php?ci=<?php echo $activeClassInfo['id']?>">Add post / Share</a>
                     </li>
+                    <?php } ?>
                 </ul>
             </nav>
         </div>
