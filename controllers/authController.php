@@ -144,6 +144,9 @@
     }
     if (isset($_POST["assignment-form-btn"])){
         $target_dir = "uploads/";
+        if (!file_exists($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
         $type = 2;
         $title = null;
         if(isset($_POST["title"])){
@@ -197,6 +200,9 @@
                         $target_file = $target_dir . $_FILES["files"]["name"][$i];
 
                         if (!move_uploaded_file($_FILES["files"]["tmp_name"][$i], $target_file)) {
+                            if(deleteVisibility($conn, $postCurrId)){
+                                deletePostById($conn, $postCurrId);
+                            }
                             die("Sorry, there was an error uploading your file.");
                         }else{
                             insertPostLink($conn, $_FILES["files"]["name"][$i], $postCurrId);
