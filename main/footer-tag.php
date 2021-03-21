@@ -41,6 +41,8 @@
     </div>
     <div class="copyright">
         <div class="copyright-pannel">Copyright 2020</div>
-        <div class="copyright-author"> DeveLOVEbug</div>
+        <div class="copyright-author"> 
+            <img src="../assets/img/team-icon.png" alt="team-icon">DeveLOVEbug 
+        </div>
     </div>
 </footer>
