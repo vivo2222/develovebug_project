@@ -209,6 +209,7 @@
                 
         }
     }
+
     if(isset($_POST['post-public-comment-btn'])){
         $comment = filter_var($_POST['comment-content'], FILTER_SANITIZE_STRING);
         if(!empty($comment)){
